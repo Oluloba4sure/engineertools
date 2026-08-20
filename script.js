@@ -23,7 +23,14 @@ const app = {
       'inductor': 'capacitor,ohms-law,voltage-divider,motor-speed',
       'transformer': 'ohms-law,voltage-divider,electrical-power,three-phase',
       'led-resistor': 'ohms-law,resistor-color,voltage-divider,electrical-power',
-      'three-phase': 'electrical-power,motor-speed,unit-converter,voltage-divider'
+      'three-phase': 'electrical-power,motor-speed,unit-converter,voltage-divider',
+      'beam-deflection': 'unit-converter,torque,gear-design,shaft-power',
+      'torque': 'shaft-power,motor-speed,gear-design,gear-ratio',
+      'shaft-power': 'torque,motor-speed,gear-ratio,gear-design',
+      'gear-design': 'gear-ratio,motor-speed,torque,shaft-power',
+      'hydraulic-jack': 'fluid-pressure,pump-head,unit-converter',
+      'pump-head': 'fluid-pressure,hydraulic-jack,unit-converter',
+      'fluid-pressure': 'pump-head,hydraulic-jack,unit-converter'
     };
     const rel = relatedMap[view];
     if (rel) this.related(rel.split(','));
@@ -469,6 +476,7 @@ const app = {
     const pf = this.val('tp-pf', true);
     const pUnit = document.getElementById('tp-p-unit').value;
     const sUnit = document.getElementById('tp-s-unit').value;
+    const qUnit = document.getElementById('tp-q-unit').value;
     const errs = [];
     if (!vl.ok) errs.push(vl.msg);
     if (!il.ok) errs.push(il.msg);
@@ -481,7 +489,7 @@ const app = {
     const q = Math.sqrt(s*s - p*p);
     this.setResult('tp-r-p', this.formatPower(p, pUnit));
     this.setResult('tp-r-s', this.formatPower(s, sUnit));
-    this.setResult('tp-r-q', this.formatReactivePower(q, pUnit));
+    this.setResult('tp-r-q', this.formatReactivePower(q, qUnit));
     this.setResult('tp-r-pf', pf.v.toFixed(4));
     document.getElementById('tp-results').hidden = false;
   },
@@ -498,10 +506,228 @@ const app = {
     return (w/1000).toFixed(4) + ' kvar';
   },
 
+  // ===== VERSION 3 CALCULATORS =====
+
+  updateBeamVisual() {
+    const type = document.getElementById('bd-type').value;
+    const diagram = document.getElementById('bd-diagram');
+    const loadGroup = document.getElementById('bd-load-group');
+    const udlGroup = document.getElementById('bd-udl-group');
+    const isUdl = type === 'ss-udl' || type === 'cant-udl';
+    loadGroup.hidden = isUdl;
+    udlGroup.hidden = !isUdl;
+    if (type === 'ss-point') {
+      diagram.textContent = 'Support ▲────────────▲\n        ↓ P';
+    } else if (type === 'ss-udl') {
+      diagram.textContent = 'Support ▲────────────▲\n        w ↓↓↓↓↓';
+    } else if (type === 'cant-point') {
+      diagram.textContent = 'Wall │───────────────\n     ↓ P';
+    } else {
+      diagram.textContent = 'Wall │───────────────\n     w ↓↓↓↓↓';
+    }
+  },
+
+  calculateBeamDeflection() {
+    this.hideError('bd-error');
+    const type = document.getElementById('bd-type').value;
+    const L = this.val('bd-length', true);
+    const E = this.val('bd-e', true);
+    const I = this.val('bd-i', true);
+    const isUdl = type === 'ss-udl' || type === 'cant-udl';
+    const load = isUdl ? this.val('bd-udl', true) : this.val('bd-load', true);
+    const errs = [];
+    if (!L.ok) errs.push(L.msg);
+    if (!E.ok) errs.push(E.msg);
+    if (!I.ok) errs.push(I.msg);
+    if (!load.ok) errs.push(load.msg);
+    if (errs.length) { this.showError('bd-error', errs.join(' ')); return; }
+    if (E.v === 0) { this.showError('bd-error', "Young's modulus cannot be zero."); return; }
+    if (I.v === 0) { this.showError('bd-error', 'Second moment of area cannot be zero.'); return; }
+    const Lm = document.getElementById('bd-length-unit').value === 'mm' ? L.v / 1000 : L.v;
+    const loadUnit = isUdl ? document.getElementById('bd-udl-unit').value : document.getElementById('bd-load-unit').value;
+    const loadN = isUdl ? (loadUnit === 'kN/m' ? load.v * 1000 : load.v) : (loadUnit === 'kN' ? load.v * 1000 : load.v);
+    const eUnit = document.getElementById('bd-e-unit').value;
+    const ePa = eUnit === 'GPa' ? E.v * 1e9 : eUnit === 'MPa' ? E.v * 1e6 : E.v;
+    const iUnit = document.getElementById('bd-i-unit').value;
+    const iM4 = iUnit === 'mm4' ? I.v * 1e-12 : I.v;
+    let delta, formula;
+    if (type === 'ss-point') {
+      delta = (loadN * Math.pow(Lm, 3)) / (48 * ePa * iM4);
+      formula = 'δmax = PL³ / 48EI';
+    } else if (type === 'ss-udl') {
+      delta = (5 * loadN * Math.pow(Lm, 4)) / (384 * ePa * iM4);
+      formula = 'δmax = 5wL⁴ / 384EI';
+    } else if (type === 'cant-point') {
+      delta = (loadN * Math.pow(Lm, 3)) / (3 * ePa * iM4);
+      formula = 'δmax = PL³ / 3EI';
+    } else {
+      delta = (loadN * Math.pow(Lm, 4)) / (8 * ePa * iM4);
+      formula = 'δmax = wL⁴ / 8EI';
+    }
+    const deltaMm = delta * 1000;
+    this.setResult('bd-r-deflection', deltaMm.toFixed(4) + ' mm (' + delta.toExponential(4) + ' m)');
+    this.setResult('bd-r-formula', formula);
+    this.setResult('bd-r-steps', 'Substituting values: ' + formula + ' = ' + delta.toExponential(4) + ' m = ' + deltaMm.toFixed(4) + ' mm');
+    document.getElementById('bd-results').hidden = false;
+  },
+
+  calculateTorque() {
+    this.hideError('tq-error');
+    const F = this.val('tq-force', true);
+    const r = this.val('tq-arm', true);
+    const angle = this.val('tq-angle', true);
+    const errs = [];
+    if (!F.ok) errs.push(F.msg);
+    if (!r.ok) errs.push(r.msg);
+    if (!angle.ok) errs.push(angle.msg);
+    if (errs.length) { this.showError('tq-error', errs.join(' ')); return; }
+    if (angle.v < 0 || angle.v > 180) { this.showError('tq-error', 'Angle must be between 0 and 180 degrees.'); return; }
+    const fUnit = document.getElementById('tq-force-unit').value;
+    const rUnit = document.getElementById('tq-arm-unit').value;
+    const fN = fUnit === 'kN' ? F.v * 1000 : F.v;
+    const rM = rUnit === 'mm' ? r.v / 1000 : rUnit === 'cm' ? r.v / 100 : r.v;
+    const theta = angle.v * Math.PI / 180;
+    const tau = rM * fN * Math.sin(theta);
+    this.setResult('tq-r-nm', tau.toFixed(4) + ' N·m');
+    this.setResult('tq-r-nmm', (tau * 1000).toFixed(2) + ' N·mm');
+    this.setResult('tq-r-knm', (tau / 1000).toFixed(6) + ' kN·m');
+    this.setResult('tq-r-steps', 'τ = ' + rM.toFixed(4) + ' m × ' + fN.toFixed(2) + ' N × sin(' + angle.v + '°) = ' + tau.toFixed(4) + ' N·m');
+    document.getElementById('tq-results').hidden = false;
+  },
+
+  calculateShaftPower() {
+    this.hideError('sp-error');
+    const T = this.val('sp-torque', true);
+    const N = this.val('sp-rpm', true);
+    const errs = [];
+    if (!T.ok) errs.push(T.msg);
+    if (!N.ok) errs.push(N.msg);
+    if (errs.length) { this.showError('sp-error', errs.join(' ')); return; }
+    const p = (2 * Math.PI * N.v * T.v) / 60;
+    this.setResult('sp-r-w', p.toFixed(2) + ' W');
+    this.setResult('sp-r-kw', (p / 1000).toFixed(4) + ' kW');
+    this.setResult('sp-r-hp', (p / 746).toFixed(4) + ' hp');
+    this.setResult('sp-r-steps', 'P = 2π × ' + N.v + ' × ' + T.v + ' / 60 = ' + p.toFixed(2) + ' W');
+    document.getElementById('sp-results').hidden = false;
+  },
+
+  calculateGearDesign() {
+    this.hideError('gd-error');
+    const z1 = this.val('gd-z1', true);
+    const z2 = this.val('gd-z2', true);
+    const rpm = this.val('gd-rpm', true);
+    const mod = this.val('gd-module', true);
+    const errs = [];
+    if (!z1.ok) errs.push(z1.msg);
+    if (!z2.ok) errs.push(z2.msg);
+    if (!rpm.ok) errs.push(rpm.msg);
+    if (!mod.ok) errs.push(mod.msg);
+    if (errs.length) { this.showError('gd-error', errs.join(' ')); return; }
+    if (z1.v === 0) { this.showError('gd-error', 'Driver teeth cannot be zero.'); return; }
+    if (z2.v === 0) { this.showError('gd-error', 'Driven teeth cannot be zero.'); return; }
+    const ratio = z2.v / z1.v;
+    const outRpm = rpm.v * z1.v / z2.v;
+    const d1 = mod.v * z1.v;
+    const d2 = mod.v * z2.v;
+    const center = (d1 + d2) / 2;
+    this.setResult('gd-r-ratio', ratio.toFixed(4) + ':1');
+    this.setResult('gd-r-output', outRpm.toFixed(2) + ' RPM');
+    this.setResult('gd-r-d1', d1.toFixed(2) + ' mm');
+    this.setResult('gd-r-d2', d2.toFixed(2) + ' mm');
+    this.setResult('gd-r-center', center.toFixed(2) + ' mm');
+    document.getElementById('gd-results').hidden = false;
+  },
+
+  calculateHydraulicJack() {
+    this.hideError('hj-error');
+    const F1 = this.val('hj-force', true);
+    const d1 = this.val('hj-d1', true);
+    const d2 = this.val('hj-d2', true);
+    const errs = [];
+    if (!F1.ok) errs.push(F1.msg);
+    if (!d1.ok) errs.push(d1.msg);
+    if (!d2.ok) errs.push(d2.msg);
+    if (errs.length) { this.showError('hj-error', errs.join(' ')); return; }
+    if (d1.v === 0) { this.showError('hj-error', 'Small piston diameter cannot be zero.'); return; }
+    const d1m = d1.v / 1000;
+    const d2m = d2.v / 1000;
+    const a1 = Math.PI * d1m * d1m / 4;
+    const a2 = Math.PI * d2m * d2m / 4;
+    const pressure = F1.v / a1;
+    const ratio = a2 / a1;
+    const f2 = F1.v * ratio;
+    this.setResult('hj-r-a1', (a1 * 1e6).toFixed(4) + ' mm²');
+    this.setResult('hj-r-a2', (a2 * 1e6).toFixed(4) + ' mm²');
+    this.setResult('hj-r-pressure', pressure.toFixed(2) + ' Pa (' + (pressure / 1000).toFixed(2) + ' kPa)');
+    this.setResult('hj-r-ratio', ratio.toFixed(2) + ':1');
+    this.setResult('hj-r-f2', f2.toFixed(2) + ' N (' + (f2 / 1000).toFixed(2) + ' kN)');
+    document.getElementById('hj-results').hidden = false;
+  },
+
+  calculatePumpHead() {
+    this.hideError('ph-error');
+    const P = this.val('ph-pressure', true);
+    const rho = this.val('ph-density', true);
+    const errs = [];
+    if (!P.ok) errs.push(P.msg);
+    if (!rho.ok) errs.push(rho.msg);
+    if (errs.length) { this.showError('ph-error', errs.join(' ')); return; }
+    if (rho.v === 0) { this.showError('ph-error', 'Fluid density cannot be zero.'); return; }
+    const pUnit = document.getElementById('ph-pressure-unit').value;
+    const pPa = pUnit === 'kPa' ? P.v * 1000 : pUnit === 'MPa' ? P.v * 1e6 : pUnit === 'bar' ? P.v * 1e5 : P.v;
+    const g = 9.81;
+    const head = pPa / (rho.v * g);
+    const staticH = document.getElementById('ph-static').value.trim() === '' ? 0 : parseFloat(document.getElementById('ph-static').value);
+    const frictionH = document.getElementById('ph-friction').value.trim() === '' ? 0 : parseFloat(document.getElementById('ph-friction').value);
+    const velocityH = document.getElementById('ph-velocity').value.trim() === '' ? 0 : parseFloat(document.getElementById('ph-velocity').value);
+    const total = head + staticH + frictionH + velocityH;
+    this.setResult('ph-r-head', head.toFixed(2) + ' m');
+    this.setResult('ph-r-total', total.toFixed(2) + ' m');
+    this.setResult('ph-r-steps', 'H = ' + pPa.toFixed(0) + ' Pa / (' + rho.v + ' × 9.81) = ' + head.toFixed(2) + ' m. Total = ' + head.toFixed(2) + ' + ' + staticH + ' + ' + frictionH + ' + ' + velocityH + ' = ' + total.toFixed(2) + ' m');
+    document.getElementById('ph-results').hidden = false;
+  },
+
+  calculateFluidPressure() {
+    this.hideError('fp-error');
+    const isHydro = document.getElementById('fp-hydro').classList.contains('active');
+    let pPa;
+    if (isHydro) {
+      const rho = this.val('fp-density', true);
+      const h = this.val('fp-depth', true);
+      const errs = [];
+      if (!rho.ok) errs.push(rho.msg);
+      if (!h.ok) errs.push(h.msg);
+      if (errs.length) { this.showError('fp-error', errs.join(' ')); return; }
+      const hUnit = document.getElementById('fp-depth-unit').value;
+      const hM = hUnit === 'cm' ? h.v / 100 : hUnit === 'mm' ? h.v / 1000 : h.v;
+      pPa = rho.v * 9.81 * hM;
+      this.setResult('fp-r-steps', 'P = ' + rho.v + ' × 9.81 × ' + hM + ' = ' + pPa.toFixed(2) + ' Pa');
+    } else {
+      const F = this.val('fp-force-val', true);
+      const A = this.val('fp-area', true);
+      const errs = [];
+      if (!F.ok) errs.push(F.msg);
+      if (!A.ok) errs.push(A.msg);
+      if (errs.length) { this.showError('fp-error', errs.join(' ')); return; }
+      if (A.v === 0) { this.showError('fp-error', 'Area cannot be zero.'); return; }
+      pPa = F.v / A.v;
+      this.setResult('fp-r-steps', 'P = ' + F.v + ' / ' + A.v + ' = ' + pPa.toFixed(2) + ' Pa');
+    }
+    const unit = document.getElementById('fp-result-unit').value;
+    const conversions = { Pa: 1, kPa: 1000, MPa: 1e6, bar: 1e5, psi: 6894.757, atm: 101325 };
+    const result = pPa / conversions[unit];
+    this.setResult('fp-r-pressure', result.toFixed(4) + ' ' + unit);
+    this.setResult('fp-r-pa', pPa.toFixed(2) + ' Pa');
+    this.setResult('fp-r-kpa', (pPa / 1000).toFixed(4) + ' kPa');
+    this.setResult('fp-r-bar', (pPa / 1e5).toFixed(6) + ' bar');
+    this.setResult('fp-r-psi', (pPa / 6894.757).toFixed(4) + ' psi');
+    document.getElementById('fp-results').hidden = false;
+  },
+
   related(ids) {
     const container = document.getElementById('related-' + this.current);
     if (!container) return;
-    const names = { 'ohms-law':"Ohm's Law", 'electrical-power':'Electrical Power', 'battery-runtime':'Battery Runtime', 'motor-speed':'Motor Speed', 'gear-ratio':'Gear Ratio', 'unit-converter':'Engineering Unit Converter', 'resistor-color':'Resistor Color Code', 'voltage-divider':'Voltage Divider', 'capacitor':'Capacitor', 'inductor':'Inductor', 'transformer':'Transformer', 'led-resistor':'LED Resistor', 'three-phase':'Three-Phase Power' };
+    const names = { 'ohms-law':"Ohm's Law", 'electrical-power':'Electrical Power', 'battery-runtime':'Battery Runtime', 'motor-speed':'Motor Speed', 'gear-ratio':'Gear Ratio', 'unit-converter':'Engineering Unit Converter', 'resistor-color':'Resistor Color Code', 'voltage-divider':'Voltage Divider', 'capacitor':'Capacitor', 'inductor':'Inductor', 'transformer':'Transformer', 'led-resistor':'LED Resistor', 'three-phase':'Three-Phase Power', 'beam-deflection':'Beam Deflection', 'torque':'Torque', 'shaft-power':'Shaft Power', 'gear-design':'Gear Design', 'hydraulic-jack':'Hydraulic Jack', 'pump-head':'Pump Head', 'fluid-pressure':'Fluid Pressure' };
     container.innerHTML = ids.map(id => '<a href="#" onclick="app.navigate(\'' + id + '\'); return false;">' + (names[id] || id) + '</a>').join(' · ');
   },
 
@@ -570,6 +796,36 @@ const app = {
       ['tp-vl','tp-il','tp-pf'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('tp-results').hidden = true;
       this.hideError('tp-error');
+    } else if (view === 'beam-deflection') {
+      ['bd-length','bd-load','bd-udl','bd-e','bd-i'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      ['bd-length-unit','bd-load-unit','bd-udl-unit','bd-e-unit','bd-i-unit'].forEach(id => { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+      document.getElementById('bd-results').hidden = true;
+      this.hideError('bd-error');
+      this.updateBeamVisual();
+    } else if (view === 'torque') {
+      ['tq-force','tq-arm','tq-angle'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('tq-results').hidden = true;
+      this.hideError('tq-error');
+    } else if (view === 'shaft-power') {
+      ['sp-torque','sp-rpm'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('sp-results').hidden = true;
+      this.hideError('sp-error');
+    } else if (view === 'gear-design') {
+      ['gd-z1','gd-z2','gd-rpm','gd-module','gd-pressure'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('gd-results').hidden = true;
+      this.hideError('gd-error');
+    } else if (view === 'hydraulic-jack') {
+      ['hj-force','hj-d1','hj-d2'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('hj-results').hidden = true;
+      this.hideError('hj-error');
+    } else if (view === 'pump-head') {
+      ['ph-pressure','ph-density','ph-static','ph-friction','ph-velocity'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('ph-results').hidden = true;
+      this.hideError('ph-error');
+    } else if (view === 'fluid-pressure') {
+      ['fp-density','fp-depth','fp-force-val','fp-area'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('fp-results').hidden = true;
+      this.hideError('fp-error');
     }
   }
 };

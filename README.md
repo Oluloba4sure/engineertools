@@ -4,12 +4,34 @@ Free, browser-based engineering calculators for students, technicians, researche
 
 ## Features
 
+### Version 1 — Core Calculators
+
 - Ohm's Law Calculator
 - Electrical Power Calculator
 - Battery Runtime Estimator
 - Motor Speed Calculator
 - Gear Ratio Calculator
 - Engineering Unit Converter
+
+### Version 2 — Electrical & Electronics
+
+- Resistor Color Code Calculator — decode resistance from 4-band color codes
+- Voltage Divider Calculator — Vout = Vin × R2 / (R1 + R2)
+- Capacitor Calculator — capacitive reactance (Xc = 1/2πfC) and RC time constant (τ = RC)
+- Inductor Calculator — inductive reactance (XL = 2πfL) and RL time constant (τ = L/R)
+- Transformer Calculator — ideal transformer voltage/turns/current relationships
+- LED Resistor Calculator — series resistor for LEDs (R = (Vs − Vf) / I)
+- Three-Phase Power Calculator — balanced system real, apparent, and reactive power
+
+### Version 3 — Mechanical & Fluid Engineering
+
+- Beam Deflection Calculator — maximum deflection for simply supported and cantilever beams (point and UDL loads) using simplified Euler-Bernoulli beam theory
+- Torque Calculator — τ = rF sin(θ) with N·m, N·mm, and kN·m results
+- Shaft Power Calculator — P = 2πNT / 60 with W, kW, and hp results
+- Gear Design Calculator — gear ratio, output RPM, pitch diameters (d = mZ), and center distance for external gears
+- Hydraulic Jack Calculator — Pascal's law force multiplication (F₂ = F₁ × A₂ / A₁)
+- Pump Head Calculator — pressure head (H = P/ρg) and total dynamic head
+- Fluid Pressure Calculator — hydrostatic pressure (P = ρgh) and pressure from force/area (P = F/A) with unit conversion
 
 ## Technologies
 

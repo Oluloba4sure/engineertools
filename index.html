@@ -121,6 +121,47 @@
                 <h3>Gear Ratio</h3>
                 <p>Calculate gear ratio and output speed.</p>
               </a>
+              <a href="#" class="calc-card" data-search="torque force lever arm angle moment" onclick="app.navigate('torque'); return false;">
+                <div class="card-icon">&#x2699;</div>
+                <h3>Torque Calculator</h3>
+                <p>Calculate torque from force and lever arm.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="shaft power torque rpm mechanical power horsepower" onclick="app.navigate('shaft-power'); return false;">
+                <div class="card-icon">&#x2699;</div>
+                <h3>Shaft Power</h3>
+                <p>Calculate power from torque and RPM.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="gear design module pitch diameter center distance teeth" onclick="app.navigate('gear-design'); return false;">
+                <div class="card-icon">&#x2699;</div>
+                <h3>Gear Design</h3>
+                <p>Gear ratio, pitch diameters, and center distance.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="beam deflection load youngs modulus moment of inertia structural" onclick="app.navigate('beam-deflection'); return false;">
+                <div class="card-icon">&#x1F4D0;</div>
+                <h3>Beam Deflection</h3>
+                <p>Estimate beam deflection for common configurations.</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="category">
+            <h2>Fluid & Hydraulics</h2>
+            <div class="card-grid">
+              <a href="#" class="calc-card" data-search="hydraulic jack pascal law piston force multiplication" onclick="app.navigate('hydraulic-jack'); return false;">
+                <div class="card-icon">&#x1F527;</div>
+                <h3>Hydraulic Jack</h3>
+                <p>Calculate hydraulic force multiplication.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="pump head pressure total dynamic head fluid density" onclick="app.navigate('pump-head'); return false;">
+                <div class="card-icon">&#x1F4A7;</div>
+                <h3>Pump Head</h3>
+                <p>Calculate pressure head and total dynamic head.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="fluid pressure hydrostatic force area conversion bar psi" onclick="app.navigate('fluid-pressure'); return false;">
+                <div class="card-icon">&#x1F4A7;</div>
+                <h3>Fluid Pressure</h3>
+                <p>Hydrostatic pressure and pressure conversion.</p>
+              </a>
             </div>
           </div>
 
@@ -781,6 +822,12 @@ GND
         </div>
         <div class="calc-layout">
           <div class="calc-form">
+            <div class="mode-select">
+              <label for="tp-mode">Calculation Mode</label>
+              <select id="tp-mode">
+                <option value="balanced">Balanced Three-Phase System</option>
+              </select>
+            </div>
             <div class="input-group">
               <label for="tp-vl">Line-to-Line Voltage (VL) in Volts</label>
               <input type="number" id="tp-vl" step="any" placeholder="e.g. 400">
@@ -806,6 +853,13 @@ GND
               <select id="tp-s-unit">
                 <option value="VA">VA</option>
                 <option value="kVA">kVA</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="tp-q-unit">Reactive Power Unit</label>
+              <select id="tp-q-unit">
+                <option value="var">var</option>
+                <option value="kvar">kvar</option>
               </select>
             </div>
             <div class="calc-actions">
@@ -1078,6 +1132,608 @@ GND
       </div>
     </section>
 
+    <!-- BEAM DEFLECTION -->
+    <section id="view-beam-deflection" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Beam Deflection Calculator</h1>
+          <p class="hero-subtitle">Estimate maximum deflection for common beam configurations.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="mode-select">
+              <label for="bd-type">Beam Type</label>
+              <select id="bd-type" onchange="app.updateBeamVisual()">
+                <option value="ss-point">Simply Supported — Center Point Load</option>
+                <option value="ss-udl">Simply Supported — Uniformly Distributed Load</option>
+                <option value="cant-point">Cantilever — End Point Load</option>
+                <option value="cant-udl">Cantilever — Uniformly Distributed Load</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="bd-length">Beam Length (L)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="bd-length" step="any" placeholder="e.g. 3">
+                </div>
+                <select id="bd-length-unit" aria-label="Length unit">
+                  <option value="m">m</option>
+                  <option value="mm">mm</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group" id="bd-load-group">
+              <label for="bd-load">Applied Load (P)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="bd-load" step="any" placeholder="e.g. 10">
+                </div>
+                <select id="bd-load-unit" aria-label="Force unit">
+                  <option value="N">N</option>
+                  <option value="kN">kN</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group" id="bd-udl-group" hidden>
+              <label for="bd-udl">Uniform Load (w)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="bd-udl" step="any" placeholder="e.g. 5">
+                </div>
+                <select id="bd-udl-unit" aria-label="Uniform load unit">
+                  <option value="N/m">N/m</option>
+                  <option value="kN/m">kN/m</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="bd-e">Young's Modulus (E)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="bd-e" step="any" placeholder="e.g. 200">
+                </div>
+                <select id="bd-e-unit" aria-label="Young's modulus unit">
+                  <option value="GPa">GPa</option>
+                  <option value="MPa">MPa</option>
+                  <option value="Pa">Pa</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="bd-i">Second Moment of Area (I)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="bd-i" step="any" placeholder="e.g. 8.33e-6">
+                </div>
+                <select id="bd-i-unit" aria-label="Second moment of area unit">
+                  <option value="m4">m⁴</option>
+                  <option value="mm4">mm⁴</option>
+                </select>
+              </div>
+            </div>
+            <div class="diagram" id="bd-diagram" aria-label="Beam diagram">
+Support ▲────────────▲
+        ↓ P
+        </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateBeamDeflection()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('beam-deflection')">Reset</button>
+            </div>
+            <div id="bd-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="bd-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Maximum Deflection</span>
+              <span class="result-value" id="bd-r-deflection">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formula Used</h3>
+              <p id="bd-r-formula">—</p>
+            </div>
+            <p class="explanation" id="bd-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Important Note</h3>
+              <p>This calculator uses simplified beam theory and is intended for educational and preliminary calculations. It should not replace detailed structural analysis or professional engineering design.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-beam-deflection"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TORQUE -->
+    <section id="view-torque" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Torque Calculator</h1>
+          <p class="hero-subtitle">Calculate torque from force, lever arm, and angle.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="tq-force">Force (F)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="tq-force" step="any" placeholder="e.g. 50">
+                </div>
+                <select id="tq-force-unit" aria-label="Force unit">
+                  <option value="N">N</option>
+                  <option value="kN">kN</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="tq-arm">Lever Arm (r)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="tq-arm" step="any" placeholder="e.g. 0.5">
+                </div>
+                <select id="tq-arm-unit" aria-label="Lever arm unit">
+                  <option value="m">m</option>
+                  <option value="cm">cm</option>
+                  <option value="mm">mm</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="tq-angle">Angle (θ) in degrees</label>
+              <input type="number" id="tq-angle" step="any" placeholder="e.g. 90" min="0" max="180">
+              <p class="explanation">Use 90° for the common perpendicular case.</p>
+            </div>
+            <div class="diagram" aria-label="Torque diagram">
+Force ↓
+  |
+  |  θ
+  |______
+  r      O (pivot)
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateTorque()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('torque')">Reset</button>
+            </div>
+            <div id="tq-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="tq-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Torque (N·m)</span>
+              <span class="result-value" id="tq-r-nm">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Torque (N·mm)</span>
+              <span class="result-value" id="tq-r-nmm">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Torque (kN·m)</span>
+              <span class="result-value" id="tq-r-knm">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formula Used</h3>
+              <p>τ = r × F × sin(θ)</p>
+            </div>
+            <p class="explanation" id="tq-r-steps">—</p>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-torque"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHAFT POWER -->
+    <section id="view-shaft-power" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Shaft Power Calculator</h1>
+          <p class="hero-subtitle">Calculate mechanical power from torque and rotational speed.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="sp-torque">Torque (T) in N·m</label>
+              <input type="number" id="sp-torque" step="any" placeholder="e.g. 50">
+            </div>
+            <div class="input-group">
+              <label for="sp-rpm">Rotational Speed (N) in RPM</label>
+              <input type="number" id="sp-rpm" step="any" placeholder="e.g. 1500">
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateShaftPower()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('shaft-power')">Reset</button>
+            </div>
+            <div id="sp-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="sp-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Power (W)</span>
+              <span class="result-value" id="sp-r-w">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Power (kW)</span>
+              <span class="result-value" id="sp-r-kw">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Power (hp)</span>
+              <span class="result-value" id="sp-r-hp">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formula Used</h3>
+              <p>P = 2πNT / 60</p>
+            </div>
+            <p class="explanation" id="sp-r-steps">—</p>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-shaft-power"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GEAR DESIGN -->
+    <section id="view-gear-design" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Gear Design Calculator</h1>
+          <p class="hero-subtitle">Preliminary gear geometry and ratio calculations.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="gd-z1">Driver Gear Teeth (Z₁)</label>
+              <input type="number" id="gd-z1" step="1" placeholder="e.g. 20" min="1">
+            </div>
+            <div class="input-group">
+              <label for="gd-z2">Driven Gear Teeth (Z₂)</label>
+              <input type="number" id="gd-z2" step="1" placeholder="e.g. 60" min="1">
+            </div>
+            <div class="input-group">
+              <label for="gd-rpm">Driver RPM (N₁)</label>
+              <input type="number" id="gd-rpm" step="any" placeholder="e.g. 1500">
+            </div>
+            <div class="input-group">
+              <label for="gd-module">Module (m) in mm</label>
+              <input type="number" id="gd-module" step="any" placeholder="e.g. 2">
+            </div>
+            <div class="input-group">
+              <label for="gd-pressure">Pressure Angle (degrees)</label>
+              <input type="number" id="gd-pressure" step="any" placeholder="e.g. 20" min="0" max="45">
+              <p class="explanation">Common values: 20° (standard), 14.5°, 25°.</p>
+            </div>
+            <div class="diagram" aria-label="Gear diagram">
+Driver Gear → Driven Gear
+  (Z₁)          (Z₂)
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateGearDesign()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('gear-design')">Reset</button>
+            </div>
+            <div id="gd-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="gd-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Gear Ratio</span>
+              <span class="result-value" id="gd-r-ratio">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Output RPM (N₂)</span>
+              <span class="result-value" id="gd-r-output">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Driver Pitch Diameter</span>
+              <span class="result-value" id="gd-r-d1">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Driven Pitch Diameter</span>
+              <span class="result-value" id="gd-r-d2">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Center Distance</span>
+              <span class="result-value" id="gd-r-center">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>i = Z₂ / Z₁</li>
+                <li>N₂ = N₁ × Z₁ / Z₂</li>
+                <li>d = m × Z</li>
+                <li>a = (d₁ + d₂) / 2</li>
+              </ul>
+            </div>
+            <div class="disclaimer-box">
+              <h3>Important Note</h3>
+              <p>This is a simplified gear calculator and does not perform complete gear-strength, wear, contact-stress, or AGMA/ISO design verification.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-gear-design"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HYDRAULIC JACK -->
+    <section id="view-hydraulic-jack" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Hydraulic Jack Calculator</h1>
+          <p class="hero-subtitle">Calculate hydraulic force multiplication using Pascal's law.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="hj-force">Small Piston Force (F₁) in N</label>
+              <input type="number" id="hj-force" step="any" placeholder="e.g. 100">
+            </div>
+            <div class="input-group">
+              <label for="hj-d1">Small Piston Diameter (d₁) in mm</label>
+              <input type="number" id="hj-d1" step="any" placeholder="e.g. 20">
+            </div>
+            <div class="input-group">
+              <label for="hj-d2">Large Piston Diameter (d₂) in mm</label>
+              <input type="number" id="hj-d2" step="any" placeholder="e.g. 100">
+            </div>
+            <div class="diagram" aria-label="Hydraulic jack diagram">
+   Load
+    ↓
+┌─────────┐
+│ Large   │
+│ Piston  │
+└────┬────┘
+     │
+Hydraulic
+Fluid
+     │
+┌────┴────┐
+│ Small   │
+│ Piston  │
+└─────────┘
+    ↑
+  Force
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateHydraulicJack()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('hydraulic-jack')">Reset</button>
+            </div>
+            <div id="hj-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="hj-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Small Piston Area</span>
+              <span class="result-value" id="hj-r-a1">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Large Piston Area</span>
+              <span class="result-value" id="hj-r-a2">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Hydraulic Pressure</span>
+              <span class="result-value" id="hj-r-pressure">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Force Multiplication Ratio</span>
+              <span class="result-value" id="hj-r-ratio">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Large Piston Force (F₂)</span>
+              <span class="result-value" id="hj-r-f2">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>A = πd² / 4</li>
+                <li>P = F / A</li>
+                <li>F₂ = F₁ × A₂ / A₁</li>
+              </ul>
+            </div>
+            <div class="disclaimer-box">
+              <h3>Assumption</h3>
+              <p>Assumes ideal hydraulic force transmission and does not account for mechanical losses.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-hydraulic-jack"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUMP HEAD -->
+    <section id="view-pump-head" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Pump Head Calculator</h1>
+          <p class="hero-subtitle">Calculate pressure head and total dynamic head.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="ph-pressure">Pressure (P)</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="ph-pressure" step="any" placeholder="e.g. 200000">
+                </div>
+                <select id="ph-pressure-unit" aria-label="Pressure unit">
+                  <option value="Pa">Pa</option>
+                  <option value="kPa">kPa</option>
+                  <option value="MPa">MPa</option>
+                  <option value="bar">bar</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="ph-density">Fluid Density (ρ) in kg/m³</label>
+              <input type="number" id="ph-density" step="any" placeholder="e.g. 1000">
+              <p class="explanation">Water ≈ 1000 kg/m³. Enter a custom density for other fluids.</p>
+            </div>
+            <div class="input-group">
+              <label for="ph-static">Static Head (m) — optional</label>
+              <input type="number" id="ph-static" step="any" placeholder="e.g. 5">
+            </div>
+            <div class="input-group">
+              <label for="ph-friction">Friction Head (m) — optional</label>
+              <input type="number" id="ph-friction" step="any" placeholder="e.g. 2">
+            </div>
+            <div class="input-group">
+              <label for="ph-velocity">Velocity Head (m) — optional</label>
+              <input type="number" id="ph-velocity" step="any" placeholder="e.g. 0.5">
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculatePumpHead()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('pump-head')">Reset</button>
+            </div>
+            <div id="ph-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="ph-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Pressure Head (H)</span>
+              <span class="result-value" id="ph-r-head">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Total Dynamic Head</span>
+              <span class="result-value" id="ph-r-total">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>H = P / (ρg)</li>
+                <li>H_total = H_static + H_friction + H_velocity</li>
+              </ul>
+            </div>
+            <p class="explanation" id="ph-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Assumption</h3>
+              <p>Basic head calculation; actual pump selection requires system-specific flow, friction losses, efficiency and manufacturer pump curves.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-pump-head"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLUID PRESSURE -->
+    <section id="view-fluid-pressure" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Fluid Pressure Calculator</h1>
+          <p class="hero-subtitle">Calculate hydrostatic pressure and pressure from force and area.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="tabs" role="tablist" aria-label="Fluid pressure calculation mode">
+              <button class="tab-btn active" id="fp-hydro" role="tab" aria-selected="true" onclick="app.switchTab(this, 'fp-hydro-panel')">Hydrostatic Pressure</button>
+              <button class="tab-btn" id="fp-force" role="tab" aria-selected="false" onclick="app.switchTab(this, 'fp-force-panel')">Force / Area</button>
+            </div>
+            <div class="tab-panel active" id="fp-hydro-panel">
+              <div class="input-group">
+                <label for="fp-density">Fluid Density (ρ) in kg/m³</label>
+                <input type="number" id="fp-density" step="any" placeholder="e.g. 1000">
+              </div>
+              <div class="input-group">
+                <label for="fp-depth">Fluid Depth (h)</label>
+                <div class="unit-row">
+                  <div class="input-group">
+                    <input type="number" id="fp-depth" step="any" placeholder="e.g. 10">
+                  </div>
+                  <select id="fp-depth-unit" aria-label="Depth unit">
+                    <option value="m">m</option>
+                    <option value="cm">cm</option>
+                    <option value="mm">mm</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-panel" id="fp-force-panel">
+              <div class="input-group">
+                <label for="fp-force-val">Force (F) in N</label>
+                <input type="number" id="fp-force-val" step="any" placeholder="e.g. 500">
+              </div>
+              <div class="input-group">
+                <label for="fp-area">Area (A) in m²</label>
+                <input type="number" id="fp-area" step="any" placeholder="e.g. 0.05">
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="fp-result-unit">Result Unit</label>
+              <select id="fp-result-unit">
+                <option value="Pa">Pa</option>
+                <option value="kPa">kPa</option>
+                <option value="MPa">MPa</option>
+                <option value="bar">bar</option>
+                <option value="psi">psi</option>
+                <option value="atm">atm</option>
+              </select>
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateFluidPressure()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('fluid-pressure')">Reset</button>
+            </div>
+            <div id="fp-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="fp-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Pressure</span>
+              <span class="result-value" id="fp-r-pressure">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Pressure (Pa)</span>
+              <span class="result-value" id="fp-r-pa">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Pressure (kPa)</span>
+              <span class="result-value" id="fp-r-kpa">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Pressure (bar)</span>
+              <span class="result-value" id="fp-r-bar">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Pressure (psi)</span>
+              <span class="result-value" id="fp-r-psi">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>P = ρgh</li>
+                <li>P = F / A</li>
+              </ul>
+            </div>
+            <p class="explanation" id="fp-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Assumption</h3>
+              <p>Hydrostatic pressure assumes a static fluid and known density.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-fluid-pressure"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- UNIT CONVERTER -->
     <section id="view-unit-converter" class="view" hidden>
       <div class="container">
@@ -1139,7 +1795,9 @@ GND
           <p>All calculations run locally in your browser. No data is sent to any server. No account is required.</p>
           <h2>Features</h2>
           <ul>
-            <li>Six essential engineering calculators</li>
+            <li>Electrical & electronics calculators (Ohm's Law, Power, Voltage Divider, Three-Phase, Resistor Color Code, Capacitor, Inductor, Transformer, LED Resistor)</li>
+            <li>Mechanical & fluid calculators (Beam Deflection, Torque, Shaft Power, Gear Design, Hydraulic Jack, Pump Head, Fluid Pressure)</li>
+            <li>Energy, mechanical, and unit converter tools</li>
             <li>Engineering unit converter</li>
             <li>Responsive design for desktop, tablet, and mobile</li>
             <li>Instant results with clear formulas</li>
