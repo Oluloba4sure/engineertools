@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EngineerTools
 
-## Getting Started
+Free, browser-based engineering calculators for students, technicians, researchers, and engineers.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Ohm's Law Calculator
+- Electrical Power Calculator
+- Battery Runtime Estimator
+- Motor Speed Calculator
+- Gear Ratio Calculator
+- Engineering Unit Converter
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- No backend or database required
+- Deployable as static files on GitHub Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Run Locally
 
-## Learn More
+Open `index.html` in any modern web browser. No build step or server is required.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy on GitHub Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push this repository to GitHub.
+2. Go to **Settings > Pages**.
+3. Under **Source**, select the branch (e.g. `main`) and folder `/ (root)`.
+4. Save. Your site will be published at `https://<username>.github.io/<repo-name>/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contribute
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Fork the repository, make your changes, and open a pull request.
