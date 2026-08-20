@@ -33,6 +33,15 @@ Free, browser-based engineering calculators for students, technicians, researche
 - Pump Head Calculator — pressure head (H = P/ρg) and total dynamic head
 - Fluid Pressure Calculator — hydrostatic pressure (P = ρgh) and pressure from force/area (P = F/A) with unit conversion
 
+### Version 4 — Energy & Power Systems
+
+- Solar Panel Sizing Calculator — required PV capacity (PV = E/(H×η)) and number of panels from daily energy, peak sun hours, and efficiency
+- Inverter Sizing Calculator — total running load, surge requirement, and recommended inverter capacity (kW/kVA) with design margin
+- Cable Sizing Calculator — load current (single/three-phase) and voltage-drop-based conductor sizing (Vdrop = IρL/A) with standard cable sizes
+- Battery Bank Sizing Calculator — required battery energy and Ah capacity from daily energy, autonomy days, DoD, and system efficiency
+- Energy Consumption Calculator — per-appliance and total daily/monthly energy (kWh) with optional tariff cost estimation and CSS bar chart
+- Generator Sizing Calculator — total running/starting load, apparent power (S = P/PF), and recommended generator kVA with standard ratings
+
 ## Technologies
 
 - HTML5

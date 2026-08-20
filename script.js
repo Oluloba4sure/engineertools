@@ -30,7 +30,13 @@ const app = {
       'gear-design': 'gear-ratio,motor-speed,torque,shaft-power',
       'hydraulic-jack': 'fluid-pressure,pump-head,unit-converter',
       'pump-head': 'fluid-pressure,hydraulic-jack,unit-converter',
-      'fluid-pressure': 'pump-head,hydraulic-jack,unit-converter'
+      'fluid-pressure': 'pump-head,hydraulic-jack,unit-converter',
+      'solar-sizing': 'battery-bank,inverter-sizing,energy-consumption,cable-sizing',
+      'inverter-sizing': 'battery-bank,energy-consumption,generator-sizing,solar-sizing',
+      'cable-sizing': 'electrical-power,three-phase,inverter-sizing,generator-sizing',
+      'battery-bank': 'solar-sizing,inverter-sizing,energy-consumption',
+      'energy-consumption': 'electrical-power,solar-sizing,battery-bank,generator-sizing',
+      'generator-sizing': 'inverter-sizing,electrical-power,three-phase,energy-consumption'
     };
     const rel = relatedMap[view];
     if (rel) this.related(rel.split(','));
@@ -724,10 +730,288 @@ const app = {
     document.getElementById('fp-results').hidden = false;
   },
 
+  // ===== VERSION 4 CALCULATORS =====
+
+  ssPanelPreset() {
+    const preset = document.getElementById('ss-panel-preset').value;
+    const panelInput = document.getElementById('ss-panel');
+    if (preset === 'custom') {
+      panelInput.value = '';
+      panelInput.disabled = false;
+    } else {
+      panelInput.value = preset;
+      panelInput.disabled = true;
+    }
+  },
+
+  calculateSolarSizing() {
+    this.hideError('ss-error');
+    const E = this.val('ss-energy', true);
+    const H = this.val('ss-sun', true);
+    const eff = this.val('ss-efficiency', true);
+    const panel = this.val('ss-panel', true);
+    const errs = [];
+    if (!E.ok) errs.push(E.msg);
+    if (!H.ok) errs.push(H.msg);
+    if (!eff.ok) errs.push(eff.msg);
+    if (!panel.ok) errs.push(panel.msg);
+    if (errs.length) { this.showError('ss-error', errs.join(' ')); return; }
+    if (H.v === 0) { this.showError('ss-error', 'Peak sun hours cannot be zero.'); return; }
+    if (eff.v === 0) { this.showError('ss-error', 'System efficiency cannot be zero.'); return; }
+    if (panel.v === 0) { this.showError('ss-error', 'Panel rating cannot be zero.'); return; }
+    const eUnit = document.getElementById('ss-energy-unit').value;
+    const eWh = eUnit === 'kWh' ? E.v * 1000 : E.v;
+    const eta = eff.v / 100;
+    const pvW = eWh / (H.v * eta);
+    const panels = Math.ceil(pvW / panel.v);
+    const installedW = panels * panel.v;
+    const productionWh = installedW * H.v * eta;
+    this.setResult('ss-r-energy', (eUnit === 'kWh' ? E.v : E.v / 1000).toFixed(2) + ' ' + (eUnit === 'kWh' ? 'kWh/day' : 'Wh/day'));
+    this.setResult('ss-r-pv', (pvW >= 1000 ? (pvW / 1000).toFixed(2) + ' kW' : pvW.toFixed(0) + ' W'));
+    this.setResult('ss-r-panels', panels + ' panels');
+    this.setResult('ss-r-installed', (installedW >= 1000 ? (installedW / 1000).toFixed(2) + ' kW' : installedW.toFixed(0) + ' W'));
+    this.setResult('ss-r-production', (productionWh >= 1000 ? (productionWh / 1000).toFixed(2) + ' kWh/day' : productionWh.toFixed(0) + ' Wh/day'));
+    this.setResult('ss-r-steps', 'PV = ' + eWh.toFixed(0) + ' Wh / (' + H.v + ' × ' + eta + ') = ' + pvW.toFixed(0) + ' W. Panels = ceil(' + pvW.toFixed(0) + ' / ' + panel.v + ') = ' + panels + '.');
+    document.getElementById('ss-results').hidden = false;
+  },
+
+  // Reusable appliance/load entry component
+  addApplianceRow(containerId, type) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const row = document.createElement('div');
+    row.className = 'appliance-card';
+    let fields = '';
+    if (type === 'inverter' || type === 'generator') {
+      fields = `
+        <div class="input-group"><label>Appliance Name</label><input type="text" class="app-name" placeholder="e.g. Refrigerator"></div>
+        <div class="input-group"><label>Quantity</label><input type="number" class="app-qty" step="1" min="1" placeholder="1"></div>
+        <div class="input-group"><label>Running Power (W)</label><input type="number" class="app-running" step="any" min="0" placeholder="150"></div>
+        <div class="input-group"><label>Surge Power (W)</label><input type="number" class="app-surge" step="any" min="0" placeholder="600"></div>`;
+    } else if (type === 'energy') {
+      fields = `
+        <div class="input-group"><label>Appliance Name</label><input type="text" class="app-name" placeholder="e.g. Refrigerator"></div>
+        <div class="input-group"><label>Quantity</label><input type="number" class="app-qty" step="1" min="1" placeholder="1"></div>
+        <div class="input-group"><label>Power (W)</label><input type="number" class="app-running" step="any" min="0" placeholder="150"></div>
+        <div class="input-group"><label>Hours/day</label><input type="number" class="app-hours" step="any" min="0" placeholder="24"></div>
+        <div class="input-group"><label>Days/month</label><input type="number" class="app-days" step="any" min="0" placeholder="30"></div>`;
+    }
+    row.innerHTML = fields + `<div class="calc-actions"><button class="btn btn-secondary" onclick="this.parentElement.parentElement.remove()">Remove</button></div>`;
+    container.appendChild(row);
+  },
+
+  clearApplianceList(containerId) {
+    const container = document.getElementById(containerId);
+    if (container) container.innerHTML = '';
+  },
+
+  collectApplianceData(containerId, type) {
+    const container = document.getElementById(containerId);
+    const rows = container.querySelectorAll('.appliance-card');
+    const items = [];
+    rows.forEach(row => {
+      const name = row.querySelector('.app-name') ? row.querySelector('.app-name').value.trim() : 'Appliance';
+      const qty = parseFloat(row.querySelector('.app-qty').value) || 0;
+      const running = parseFloat(row.querySelector('.app-running').value) || 0;
+      const surge = row.querySelector('.app-surge') ? (parseFloat(row.querySelector('.app-surge').value) || 0) : 0;
+      const hours = row.querySelector('.app-hours') ? (parseFloat(row.querySelector('.app-hours').value) || 0) : 0;
+      const days = row.querySelector('.app-days') ? (parseFloat(row.querySelector('.app-days').value) || 0) : 0;
+      items.push({ name, qty, running, surge, hours, days });
+    });
+    return items;
+  },
+
+  calculateInverterSizing() {
+    this.hideError('inv-error');
+    const margin = this.val('inv-margin', true);
+    if (!margin.ok) { this.showError('inv-error', margin.msg); return; }
+    const items = this.collectApplianceData('inv-appliances', 'inverter');
+    if (items.length === 0) { this.showError('inv-error', 'Add at least one appliance.'); return; }
+    let totalRunning = 0;
+    let totalSurge = 0;
+    items.forEach(it => {
+      totalRunning += it.running * it.qty;
+      totalSurge += it.surge * it.qty;
+    });
+    if (totalRunning === 0) { this.showError('inv-error', 'Total running load cannot be zero.'); return; }
+    const factor = 1 + margin.v / 100;
+    const recommendedW = totalRunning * factor;
+    const surgeCap = Math.max(totalSurge, recommendedW);
+    const stdSizes = [1, 1.5, 2, 3, 5, 7.5, 10];
+    const recommendedKva = recommendedW / 1000;
+    let std = stdSizes.find(s => s >= recommendedKva) || 10;
+    this.setResult('inv-r-running', totalRunning.toFixed(0) + ' W (' + (totalRunning / 1000).toFixed(2) + ' kW)');
+    this.setResult('inv-r-surge', totalSurge.toFixed(0) + ' W');
+    this.setResult('inv-r-continuous', recommendedW.toFixed(0) + ' W (' + recommendedKva.toFixed(2) + ' kW)');
+    this.setResult('inv-r-rating', std + ' kVA (approx ' + (std * 0.8).toFixed(1) + ' kW at PF 0.8)');
+    this.setResult('inv-r-surge-cap', surgeCap.toFixed(0) + ' W (' + (surgeCap / 1000).toFixed(2) + ' kW)');
+    document.getElementById('inv-results').hidden = false;
+  },
+
+  calculateCableSizing() {
+    this.hideError('cs-error');
+    const P = this.val('cs-power', true);
+    const V = this.val('cs-voltage', true);
+    const L = this.val('cs-length', true);
+    const pf = this.val('cs-pf', true);
+    const vdPct = this.val('cs-vd', true);
+    const errs = [];
+    if (!P.ok) errs.push(P.msg);
+    if (!V.ok) errs.push(V.msg);
+    if (!L.ok) errs.push(L.msg);
+    if (!pf.ok) errs.push(pf.msg);
+    if (!vdPct.ok) errs.push(vdPct.msg);
+    if (errs.length) { this.showError('cs-error', errs.join(' ')); return; }
+    if (V.v === 0) { this.showError('cs-error', 'Voltage cannot be zero.'); return; }
+    if (pf.v === 0) { this.showError('cs-error', 'Power factor cannot be zero.'); return; }
+    if (vdPct.v === 0) { this.showError('cs-error', 'Allowable voltage drop cannot be zero.'); return; }
+    const pUnit = document.getElementById('cs-power-unit').value;
+    const pW = pUnit === 'kW' ? P.v * 1000 : P.v;
+    const phase = document.getElementById('cs-phase').value;
+    const material = document.getElementById('cs-material').value;
+    const rho = material === 'copper' ? 1.68e-8 : 2.82e-8;
+    const current = phase === 'single' ? pW / (V.v * pf.v) : pW / (Math.sqrt(3) * V.v * pf.v);
+    const vdMax = V.v * vdPct.v / 100;
+    const stdSizes = [1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
+    let minAreaM2 = (2 * current * rho * L.v) / vdMax;
+    let minAreaMm2 = minAreaM2 * 1e6;
+    let chosen = stdSizes.find(s => s >= minAreaMm2) || 120;
+    const vdrop = (2 * current * rho * L.v) / (chosen * 1e-6);
+    const vdActualPct = (vdrop / V.v) * 100;
+    this.setResult('cs-r-current', current.toFixed(2) + ' A');
+    this.setResult('cs-r-area', minAreaMm2.toFixed(2) + ' mm²');
+    this.setResult('cs-r-size', chosen + ' mm²');
+    this.setResult('cs-r-vdrop', vdrop.toFixed(2) + ' V');
+    this.setResult('cs-r-vd-pct', vdActualPct.toFixed(2) + '%');
+    this.setResult('cs-r-material', material.charAt(0).toUpperCase() + material.slice(1));
+    this.setResult('cs-r-steps', 'I = ' + pW.toFixed(0) + ' / (' + (phase === 'single' ? V.v + ' × ' + pf.v : '√3 × ' + V.v + ' × ' + pf.v) + ') = ' + current.toFixed(2) + ' A. Min area = ' + minAreaMm2.toFixed(2) + ' mm². Selected: ' + chosen + ' mm².');
+    document.getElementById('cs-results').hidden = false;
+  },
+
+  bbTypeChange() {
+    const type = document.getElementById('bb-type').value;
+    const dodMap = { 'lead-acid': 50, 'agm': 60, 'gel': 70, 'lithium': 80, 'lifepo4': 90 };
+    if (dodMap[type]) {
+      document.getElementById('bb-dod').value = dodMap[type];
+    }
+  },
+
+  calculateBatteryBank() {
+    this.hideError('bb-error');
+    const E = this.val('bb-energy', true);
+    const days = this.val('bb-autonomy', true);
+    const V = this.val('bb-voltage', true);
+    const dod = this.val('bb-dod', true);
+    const eff = this.val('bb-efficiency', true);
+    const errs = [];
+    if (!E.ok) errs.push(E.msg);
+    if (!days.ok) errs.push(days.msg);
+    if (!V.ok) errs.push(V.msg);
+    if (!dod.ok) errs.push(dod.msg);
+    if (!eff.ok) errs.push(eff.msg);
+    if (errs.length) { this.showError('bb-error', errs.join(' ')); return; }
+    if (V.v === 0) { this.showError('bb-error', 'System voltage cannot be zero.'); return; }
+    if (dod.v === 0) { this.showError('bb-error', 'Depth of discharge cannot be zero.'); return; }
+    if (eff.v === 0) { this.showError('bb-error', 'System efficiency cannot be zero.'); return; }
+    const eUnit = document.getElementById('bb-energy-unit').value;
+    const eWh = eUnit === 'kWh' ? E.v * 1000 : E.v;
+    const dodDec = dod.v / 100;
+    const effDec = eff.v / 100;
+    const battEnergy = (eWh * days.v) / (dodDec * effDec);
+    const ah = battEnergy / V.v;
+    this.setResult('bb-r-energy', battEnergy.toFixed(0) + ' Wh (' + (battEnergy / 1000).toFixed(2) + ' kWh)');
+    this.setResult('bb-r-ah', ah.toFixed(0) + ' Ah');
+    this.setResult('bb-r-voltage', V.v + ' V');
+    const battV = document.getElementById('bb-batt-voltage').value;
+    const battAh = document.getElementById('bb-batt-ah').value.trim();
+    if (battV && battAh !== '' && parseFloat(battAh) > 0) {
+      const bv = parseFloat(battV);
+      const ba = parseFloat(battAh);
+      const series = Math.ceil(V.v / bv);
+      const parallel = Math.ceil(ah / ba);
+      const totalAh = series * parallel * ba;
+      this.setResult('bb-r-series', series + ' batteries in series');
+      this.setResult('bb-r-parallel', parallel + ' parallel string(s)');
+      this.setResult('bb-r-total', totalAh.toFixed(0) + ' Ah (' + (totalAh * V.v / 1000).toFixed(1) + ' kWh)');
+    } else {
+      this.setResult('bb-r-series', '— (battery specs not provided)');
+      this.setResult('bb-r-parallel', '— (battery specs not provided)');
+      this.setResult('bb-r-total', '— (battery specs not provided)');
+    }
+    this.setResult('bb-r-steps', 'Battery Energy = (' + eWh.toFixed(0) + ' × ' + days.v + ') / (' + dodDec + ' × ' + effDec + ') = ' + battEnergy.toFixed(0) + ' Wh. Capacity = ' + battEnergy.toFixed(0) + ' / ' + V.v + ' = ' + ah.toFixed(0) + ' Ah.');
+    document.getElementById('bb-results').hidden = false;
+  },
+
+  calculateEnergyConsumption() {
+    this.hideError('ec-error');
+    const items = this.collectApplianceData('ec-appliances', 'energy');
+    if (items.length === 0) { this.showError('ec-error', 'Add at least one appliance.'); return; }
+    let totalLoad = 0;
+    let totalDaily = 0;
+    let totalMonthly = 0;
+    const chartData = [];
+    items.forEach(it => {
+      const load = it.running * it.qty;
+      const dailyWh = load * it.hours;
+      const monthlyWh = dailyWh * it.days;
+      totalLoad += load;
+      totalDaily += dailyWh;
+      totalMonthly += monthlyWh;
+      chartData.push({ name: it.name, monthlyKwh: monthlyWh / 1000 });
+    });
+    const tariffRaw = document.getElementById('ec-tariff').value.trim();
+    const tariff = tariffRaw === '' ? 0 : parseFloat(tariffRaw);
+    const monthlyKwh = totalMonthly / 1000;
+    const cost = monthlyKwh * tariff;
+    this.setResult('ec-r-load', totalLoad.toFixed(0) + ' W (' + (totalLoad / 1000).toFixed(2) + ' kW)');
+    this.setResult('ec-r-daily', (totalDaily / 1000).toFixed(2) + ' kWh/day');
+    this.setResult('ec-r-monthly', monthlyKwh.toFixed(2) + ' kWh/month');
+    this.setResult('ec-r-cost', tariff > 0 ? cost.toFixed(2) + ' (currency units)' : '— (no tariff entered)');
+    this.setResult('ec-r-steps', 'Total monthly energy = ' + monthlyKwh.toFixed(2) + ' kWh. ' + (tariff > 0 ? 'Cost = ' + monthlyKwh.toFixed(2) + ' × ' + tariff + ' = ' + cost.toFixed(2) : 'Enter a tariff to estimate cost.'));
+    // Build simple CSS bar chart
+    const chart = document.getElementById('ec-chart');
+    const max = Math.max(...chartData.map(d => d.monthlyKwh), 1);
+    chart.innerHTML = '<h3>Monthly Energy by Appliance (kWh)</h3>' + chartData.map(d => `
+      <div class="bar-row">
+        <span class="bar-label">${d.name}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${(d.monthlyKwh / max * 100).toFixed(1)}%"></div></div>
+        <span class="bar-value">${d.monthlyKwh.toFixed(1)}</span>
+      </div>`).join('');
+    document.getElementById('ec-results').hidden = false;
+  },
+
+  calculateGeneratorSizing() {
+    this.hideError('gs-error');
+    const margin = this.val('gs-margin', true);
+    if (!margin.ok) { this.showError('gs-error', margin.msg); return; }
+    const items = this.collectApplianceData('gs-loads', 'generator');
+    if (items.length === 0) { this.showError('gs-error', 'Add at least one load.'); return; }
+    let totalRunning = 0;
+    let totalSurge = 0;
+    items.forEach(it => {
+      totalRunning += it.running * it.qty;
+      totalSurge += it.surge * it.qty;
+    });
+    if (totalRunning === 0) { this.showError('gs-error', 'Total running load cannot be zero.'); return; }
+    const factor = 1 + margin.v / 100;
+    const apparentVA = totalRunning / 0.8;
+    const recommendedVA = Math.max(totalRunning, totalSurge) * factor;
+    const stdSizes = [1, 2, 3, 5, 7.5, 10, 15, 20, 30, 50];
+    const recommendedKva = recommendedVA / 1000;
+    let std = stdSizes.find(s => s >= recommendedKva) || 50;
+    this.setResult('gs-r-running', totalRunning.toFixed(0) + ' W (' + (totalRunning / 1000).toFixed(2) + ' kW)');
+    this.setResult('gs-r-starting', totalSurge.toFixed(0) + ' W (' + (totalSurge / 1000).toFixed(2) + ' kW)');
+    this.setResult('gs-r-apparent', (apparentVA / 1000).toFixed(2) + ' kVA (at PF 0.8)');
+    this.setResult('gs-r-recommended', recommendedKva.toFixed(2) + ' kVA');
+    this.setResult('gs-r-standard', std + ' kVA');
+    this.setResult('gs-r-steps', 'Running = ' + totalRunning.toFixed(0) + ' W. Surge = ' + totalSurge.toFixed(0) + ' W. Recommended = max(' + totalRunning.toFixed(0) + ', ' + totalSurge.toFixed(0) + ') × ' + factor + ' = ' + recommendedVA.toFixed(0) + ' VA = ' + recommendedKva.toFixed(2) + ' kVA. Standard: ' + std + ' kVA.');
+    document.getElementById('gs-results').hidden = false;
+  },
+
   related(ids) {
     const container = document.getElementById('related-' + this.current);
     if (!container) return;
-    const names = { 'ohms-law':"Ohm's Law", 'electrical-power':'Electrical Power', 'battery-runtime':'Battery Runtime', 'motor-speed':'Motor Speed', 'gear-ratio':'Gear Ratio', 'unit-converter':'Engineering Unit Converter', 'resistor-color':'Resistor Color Code', 'voltage-divider':'Voltage Divider', 'capacitor':'Capacitor', 'inductor':'Inductor', 'transformer':'Transformer', 'led-resistor':'LED Resistor', 'three-phase':'Three-Phase Power', 'beam-deflection':'Beam Deflection', 'torque':'Torque', 'shaft-power':'Shaft Power', 'gear-design':'Gear Design', 'hydraulic-jack':'Hydraulic Jack', 'pump-head':'Pump Head', 'fluid-pressure':'Fluid Pressure' };
+    const names = { 'ohms-law':"Ohm's Law", 'electrical-power':'Electrical Power', 'battery-runtime':'Battery Runtime', 'motor-speed':'Motor Speed', 'gear-ratio':'Gear Ratio', 'unit-converter':'Engineering Unit Converter', 'resistor-color':'Resistor Color Code', 'voltage-divider':'Voltage Divider', 'capacitor':'Capacitor', 'inductor':'Inductor', 'transformer':'Transformer', 'led-resistor':'LED Resistor', 'three-phase':'Three-Phase Power', 'beam-deflection':'Beam Deflection', 'torque':'Torque', 'shaft-power':'Shaft Power', 'gear-design':'Gear Design', 'hydraulic-jack':'Hydraulic Jack', 'pump-head':'Pump Head', 'fluid-pressure':'Fluid Pressure', 'solar-sizing':'Solar Panel Sizing', 'inverter-sizing':'Inverter Sizing', 'cable-sizing':'Cable Sizing', 'battery-bank':'Battery Bank Sizing', 'energy-consumption':'Energy Consumption', 'generator-sizing':'Generator Sizing' };
     container.innerHTML = ids.map(id => '<a href="#" onclick="app.navigate(\'' + id + '\'); return false;">' + (names[id] || id) + '</a>').join(' · ');
   },
 
@@ -826,6 +1110,40 @@ const app = {
       ['fp-density','fp-depth','fp-force-val','fp-area'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('fp-results').hidden = true;
       this.hideError('fp-error');
+    } else if (view === 'solar-sizing') {
+      ['ss-energy','ss-sun','ss-efficiency','ss-panel'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('ss-panel-preset').selectedIndex = 6;
+      document.getElementById('ss-results').hidden = true;
+      this.hideError('ss-error');
+    } else if (view === 'inverter-sizing') {
+      document.getElementById('inv-margin').value = '20';
+      this.clearApplianceList('inv-appliances');
+      this.addApplianceRow('inv-appliances', 'inverter');
+      document.getElementById('inv-results').hidden = true;
+      this.hideError('inv-error');
+    } else if (view === 'cable-sizing') {
+      ['cs-power','cs-voltage','cs-length','cs-pf','cs-vd'].forEach(id => document.getElementById(id).value = '');
+      ['cs-power-unit','cs-phase','cs-material'].forEach(id => { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+      document.getElementById('cs-results').hidden = true;
+      this.hideError('cs-error');
+    } else if (view === 'battery-bank') {
+      ['bb-energy','bb-autonomy','bb-voltage','bb-dod','bb-efficiency','bb-batt-ah'].forEach(id => document.getElementById(id).value = '');
+      ['bb-energy-unit','bb-type','bb-batt-voltage'].forEach(id => { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+      document.getElementById('bb-results').hidden = true;
+      this.hideError('bb-error');
+      this.bbTypeChange();
+    } else if (view === 'energy-consumption') {
+      document.getElementById('ec-tariff').value = '';
+      this.clearApplianceList('ec-appliances');
+      this.addApplianceRow('ec-appliances', 'energy');
+      document.getElementById('ec-results').hidden = true;
+      this.hideError('ec-error');
+    } else if (view === 'generator-sizing') {
+      document.getElementById('gs-margin').value = '20';
+      this.clearApplianceList('gs-loads');
+      this.addApplianceRow('gs-loads', 'generator');
+      document.getElementById('gs-results').hidden = true;
+      this.hideError('gs-error');
     }
   }
 };

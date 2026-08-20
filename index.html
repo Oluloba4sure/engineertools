@@ -166,6 +166,42 @@
           </div>
 
           <div class="category">
+            <h2>Energy & Power Systems</h2>
+            <div class="card-grid">
+              <a href="#" class="calc-card" data-search="solar solar panel pv photovoltaic sizing capacity" onclick="app.navigate('solar-sizing'); return false;">
+                <div class="card-icon">&#x2600;</div>
+                <h3>Solar Panel Sizing</h3>
+                <p>Estimate required solar array capacity.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="inverter sizing surge power kva appliances" onclick="app.navigate('inverter-sizing'); return false;">
+                <div class="card-icon">&#x26A1;</div>
+                <h3>Inverter Sizing</h3>
+                <p>Select an appropriate inverter capacity.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="cable cable size conductor voltage drop wire" onclick="app.navigate('cable-sizing'); return false;">
+                <div class="card-icon">&#x1F50C;</div>
+                <h3>Cable Sizing</h3>
+                <p>Estimate conductor size and voltage drop.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="battery battery bank capacity amp hours autonomy" onclick="app.navigate('battery-bank'); return false;">
+                <div class="card-icon">&#x1F50B;</div>
+                <h3>Battery Bank Sizing</h3>
+                <p>Estimate battery capacity for backup systems.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="energy consumption electricity bill power usage appliance" onclick="app.navigate('energy-consumption'); return false;">
+                <div class="card-icon">&#x1F4CA;</div>
+                <h3>Energy Consumption</h3>
+                <p>Calculate electrical energy use and cost.</p>
+              </a>
+              <a href="#" class="calc-card" data-search="generator generator size kva power backup load" onclick="app.navigate('generator-sizing'); return false;">
+                <div class="card-icon">&#x2699;</div>
+                <h3>Generator Sizing</h3>
+                <p>Estimate generator capacity for loads.</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="category">
             <h2>Converters</h2>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="unit converter length pressure power energy temperature" onclick="app.navigate('unit-converter'); return false;">
@@ -1734,6 +1770,522 @@ Fluid
       </div>
     </section>
 
+    <!-- SOLAR PANEL SIZING -->
+    <section id="view-solar-sizing" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Solar Panel Sizing Calculator</h1>
+          <p class="hero-subtitle">Estimate the required photovoltaic array capacity for your daily energy needs.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="ss-energy">Daily Energy Requirement</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="ss-energy" step="any" placeholder="e.g. 5">
+                </div>
+                <select id="ss-energy-unit" aria-label="Energy unit">
+                  <option value="kWh">kWh/day</option>
+                  <option value="Wh">Wh/day</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="ss-sun">Peak Sun Hours (per day)</label>
+              <input type="number" id="ss-sun" step="any" placeholder="e.g. 5" min="0">
+            </div>
+            <div class="input-group">
+              <label for="ss-efficiency">System Efficiency (%)</label>
+              <input type="number" id="ss-efficiency" step="any" placeholder="e.g. 80" min="0" max="100">
+            </div>
+            <div class="input-group">
+              <label for="ss-panel">Panel Rating</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <select id="ss-panel-preset" onchange="app.ssPanelPreset()">
+                    <option value="100">100 W</option>
+                    <option value="200">200 W</option>
+                    <option value="300">300 W</option>
+                    <option value="400">400 W</option>
+                    <option value="450">450 W</option>
+                    <option value="500">500 W</option>
+                    <option value="550" selected>550 W</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <input type="number" id="ss-panel" step="any" placeholder="e.g. 550" min="0">
+                </div>
+              </div>
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateSolarSizing()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('solar-sizing')">Reset</button>
+            </div>
+            <div id="ss-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="ss-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Daily Energy Requirement</span>
+              <span class="result-value" id="ss-r-energy">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Required Solar Array Capacity</span>
+              <span class="result-value" id="ss-r-pv">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Number of Panels</span>
+              <span class="result-value" id="ss-r-panels">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Actual Installed PV Capacity</span>
+              <span class="result-value" id="ss-r-installed">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Estimated Daily Solar Production</span>
+              <span class="result-value" id="ss-r-production">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formula Used</h3>
+              <p>PV Power = E / (H × η)</p>
+              <p>Number of Panels = PV Power / Panel Rating (rounded up)</p>
+            </div>
+            <p class="explanation" id="ss-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Important Disclaimer</h3>
+              <p>This calculator provides preliminary solar-system sizing only. Actual system design should consider location-specific solar irradiation, temperature, shading, panel orientation, battery losses, inverter efficiency, wiring losses and applicable electrical standards.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-solar-sizing"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVERTER SIZING -->
+    <section id="view-inverter-sizing" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Inverter Sizing Calculator</h1>
+          <p class="hero-subtitle">Estimate the minimum inverter capacity required for your appliances.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="inv-margin">Design Margin (%)</label>
+              <input type="number" id="inv-margin" step="any" placeholder="e.g. 20" min="0" value="20">
+            </div>
+            <div id="inv-appliances" class="appliance-list"></div>
+            <div class="calc-actions">
+              <button class="btn btn-secondary" onclick="app.addApplianceRow('inv-appliances', 'inverter')">+ Add Appliance</button>
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateInverterSizing()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('inverter-sizing')">Reset</button>
+            </div>
+            <div id="inv-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="inv-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Total Running Load</span>
+              <span class="result-value" id="inv-r-running">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Estimated Surge Requirement</span>
+              <span class="result-value" id="inv-r-surge">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Continuous Capacity</span>
+              <span class="result-value" id="inv-r-continuous">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Inverter Rating</span>
+              <span class="result-value" id="inv-r-rating">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Minimum Surge Capacity</span>
+              <span class="result-value" id="inv-r-surge-cap">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>Total Running = Σ (Running Power × Quantity)</li>
+                <li>Recommended = Total Running × (1 + Margin/100)</li>
+              </ul>
+            </div>
+            <p class="explanation">kW = real power. kVA = apparent power. For resistive loads, kVA ≈ kW. For inductive loads, kVA = kW / PF.</p>
+            <div class="disclaimer-box">
+              <h3>Important Note</h3>
+              <p>Actual inverter selection should consider appliance starting currents, power factor, inverter waveform, battery voltage, manufacturer specifications and applicable standards.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-inverter-sizing"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CABLE SIZING -->
+    <section id="view-cable-sizing" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Cable Sizing Calculator</h1>
+          <p class="hero-subtitle">Estimate conductor size based on load current and voltage drop.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="cs-power">Load Power</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="cs-power" step="any" placeholder="e.g. 5000">
+                </div>
+                <select id="cs-power-unit" aria-label="Power unit">
+                  <option value="W">W</option>
+                  <option value="kW">kW</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="cs-voltage">System Voltage (V)</label>
+              <input type="number" id="cs-voltage" step="any" placeholder="e.g. 230">
+            </div>
+            <div class="input-group">
+              <label for="cs-phase">System Type</label>
+              <select id="cs-phase">
+                <option value="single">Single-Phase</option>
+                <option value="three">Three-Phase</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="cs-length">Cable Length (one-way, m)</label>
+              <input type="number" id="cs-length" step="any" placeholder="e.g. 30">
+              <p class="explanation">The calculator uses one-way length and accounts for the return path in the voltage-drop calculation.</p>
+            </div>
+            <div class="input-group">
+              <label for="cs-material">Conductor Material</label>
+              <select id="cs-material">
+                <option value="copper">Copper</option>
+                <option value="aluminium">Aluminium</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="cs-pf">Power Factor</label>
+              <input type="number" id="cs-pf" step="any" placeholder="e.g. 0.9" min="0" max="1">
+            </div>
+            <div class="input-group">
+              <label for="cs-vd">Allowable Voltage Drop (%)</label>
+              <input type="number" id="cs-vd" step="any" placeholder="e.g. 3" min="0">
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateCableSizing()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('cable-sizing')">Reset</button>
+            </div>
+            <div id="cs-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="cs-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Load Current</span>
+              <span class="result-value" id="cs-r-current">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Minimum Estimated Conductor Area</span>
+              <span class="result-value" id="cs-r-area">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Standard Cable Size</span>
+              <span class="result-value" id="cs-r-size">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Estimated Voltage Drop</span>
+              <span class="result-value" id="cs-r-vdrop">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Voltage Drop (%)</span>
+              <span class="result-value" id="cs-r-vd-pct">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Conductor Material</span>
+              <span class="result-value" id="cs-r-material">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>I = P / (V × PF) — single-phase</li>
+                <li>I = P / (√3 × V × PF) — three-phase</li>
+                <li>Vdrop = I × ρ × L × 2 / A (simplified resistive)</li>
+              </ul>
+            </div>
+            <p class="explanation" id="cs-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Critical Safety Notice</h3>
+              <p>This is a preliminary cable-sizing calculator, not a substitute for electrical installation design. Actual cable selection must consider ampacity, installation method, ambient temperature, grouping, insulation rating, short-circuit withstand, protective devices, voltage drop limits and applicable electrical codes/standards.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-cable-sizing"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BATTERY BANK SIZING -->
+    <section id="view-battery-bank" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Battery Bank Sizing Calculator</h1>
+          <p class="hero-subtitle">Estimate battery capacity for off-grid or backup power systems.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="bb-energy">Daily Energy Requirement</label>
+              <div class="unit-row">
+                <div class="input-group">
+                  <input type="number" id="bb-energy" step="any" placeholder="e.g. 5000">
+                </div>
+                <select id="bb-energy-unit" aria-label="Energy unit">
+                  <option value="Wh">Wh/day</option>
+                  <option value="kWh">kWh/day</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="bb-autonomy">Required Autonomy (days)</label>
+              <input type="number" id="bb-autonomy" step="any" placeholder="e.g. 1" min="0">
+            </div>
+            <div class="input-group">
+              <label for="bb-voltage">System Voltage (V)</label>
+              <input type="number" id="bb-voltage" step="any" placeholder="e.g. 24">
+            </div>
+            <div class="input-group">
+              <label for="bb-type">Battery Type</label>
+              <select id="bb-type" onchange="app.bbTypeChange()">
+                <option value="lead-acid">Lead-Acid (DoD 50%)</option>
+                <option value="agm">AGM (DoD 60%)</option>
+                <option value="gel">Gel (DoD 70%)</option>
+                <option value="lithium">Lithium-ion (DoD 80%)</option>
+                <option value="lifepo4">LiFePO4 (DoD 90%)</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="bb-dod">Maximum Depth of Discharge (%)</label>
+              <input type="number" id="bb-dod" step="any" placeholder="e.g. 80" min="0" max="100">
+            </div>
+            <div class="input-group">
+              <label for="bb-efficiency">System Efficiency (%)</label>
+              <input type="number" id="bb-efficiency" step="any" placeholder="e.g. 90" min="0" max="100">
+            </div>
+            <div class="input-group">
+              <label for="bb-batt-voltage">Battery Nominal Voltage (V) — optional</label>
+              <select id="bb-batt-voltage">
+                <option value="">Not specified</option>
+                <option value="2">2 V</option>
+                <option value="6">6 V</option>
+                <option value="12">12 V</option>
+                <option value="24">24 V</option>
+                <option value="48">48 V</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="bb-batt-ah">Battery Capacity (Ah) — optional</label>
+              <input type="number" id="bb-batt-ah" step="any" placeholder="e.g. 200" min="0">
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateBatteryBank()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('battery-bank')">Reset</button>
+            </div>
+            <div id="bb-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="bb-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Required Battery Energy</span>
+              <span class="result-value" id="bb-r-energy">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Battery Capacity</span>
+              <span class="result-value" id="bb-r-ah">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">System Voltage</span>
+              <span class="result-value" id="bb-r-voltage">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Batteries in Series</span>
+              <span class="result-value" id="bb-r-series">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Parallel Strings</span>
+              <span class="result-value" id="bb-r-parallel">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Total Nominal Battery Capacity</span>
+              <span class="result-value" id="bb-r-total">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>Battery Energy = (E × Days) / (DoD × η)</li>
+                <li>Capacity (Ah) = Battery Energy / System Voltage</li>
+              </ul>
+            </div>
+            <p class="explanation" id="bb-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Important Note</h3>
+              <p>Battery sizing is an estimate. Actual battery selection should consider temperature, discharge rate, battery chemistry, cycle life, manufacturer specifications, inverter efficiency and system operating conditions.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-battery-bank"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENERGY CONSUMPTION -->
+    <section id="view-energy-consumption" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Energy Consumption Calculator</h1>
+          <p class="hero-subtitle">Calculate electrical energy use and estimated cost for your appliances.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="ec-tariff">Electricity Tariff (per kWh) — optional</label>
+              <input type="number" id="ec-tariff" step="any" placeholder="e.g. 0.15" min="0">
+            </div>
+            <div id="ec-appliances" class="appliance-list"></div>
+            <div class="calc-actions">
+              <button class="btn btn-secondary" onclick="app.addApplianceRow('ec-appliances', 'energy')">+ Add Appliance</button>
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateEnergyConsumption()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('energy-consumption')">Reset</button>
+            </div>
+            <div id="ec-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="ec-results" hidden>
+            <h2>Summary Dashboard</h2>
+            <div class="result-item">
+              <span class="result-label">Total Connected Load</span>
+              <span class="result-value" id="ec-r-load">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Total Daily Energy</span>
+              <span class="result-value" id="ec-r-daily">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Total Monthly Energy</span>
+              <span class="result-value" id="ec-r-monthly">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Estimated Monthly Cost</span>
+              <span class="result-value" id="ec-r-cost">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formula Used</h3>
+              <p>Energy (kWh) = Power (W) × Quantity × Hours × Days / 1000</p>
+            </div>
+            <div id="ec-chart" class="bar-chart" aria-label="Monthly energy consumption chart"></div>
+            <p class="explanation" id="ec-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Important Note</h3>
+              <p>Actual energy consumption may differ from nameplate ratings.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-energy-consumption"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GENERATOR SIZING -->
+    <section id="view-generator-sizing" class="view" hidden>
+      <div class="container">
+        <div class="calc-header">
+          <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
+          <h1>Generator Sizing Calculator</h1>
+          <p class="hero-subtitle">Estimate the required generator capacity for your loads.</p>
+        </div>
+        <div class="calc-layout">
+          <div class="calc-form">
+            <div class="input-group">
+              <label for="gs-margin">Design Margin (%)</label>
+              <input type="number" id="gs-margin" step="any" placeholder="e.g. 20" min="0" value="20">
+            </div>
+            <div id="gs-loads" class="appliance-list"></div>
+            <div class="calc-actions">
+              <button class="btn btn-secondary" onclick="app.addApplianceRow('gs-loads', 'generator')">+ Add Load</button>
+            </div>
+            <div class="calc-actions">
+              <button class="btn btn-primary" onclick="app.calculateGeneratorSizing()">Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('generator-sizing')">Reset</button>
+            </div>
+            <div id="gs-error" class="error" role="alert" hidden></div>
+          </div>
+          <div class="calc-results" id="gs-results" hidden>
+            <h2>Results</h2>
+            <div class="result-item">
+              <span class="result-label">Total Running Load</span>
+              <span class="result-value" id="gs-r-running">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Estimated Starting Load</span>
+              <span class="result-value" id="gs-r-starting">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Estimated Apparent Power</span>
+              <span class="result-value" id="gs-r-apparent">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Generator Size</span>
+              <span class="result-value" id="gs-r-recommended">—</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Recommended Standard Rating</span>
+              <span class="result-value" id="gs-r-standard">—</span>
+            </div>
+            <div class="formula-box">
+              <h3>Formulas Used</h3>
+              <ul>
+                <li>S = P / PF</li>
+                <li>Recommended = Max(Running, Surge) × (1 + Margin/100)</li>
+              </ul>
+            </div>
+            <p class="explanation" id="gs-r-steps">—</p>
+            <div class="disclaimer-box">
+              <h3>Important Note</h3>
+              <p>Generator sizing depends on motor starting characteristics, load diversity, power factor, generator alternator characteristics, altitude, ambient temperature and manufacturer recommendations. This calculator provides preliminary sizing only.</p>
+            </div>
+            <div class="related-calculators">
+              <h3>Related Calculators</h3>
+              <div id="related-generator-sizing"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- UNIT CONVERTER -->
     <section id="view-unit-converter" class="view" hidden>
       <div class="container">
@@ -1797,6 +2349,7 @@ Fluid
           <ul>
             <li>Electrical & electronics calculators (Ohm's Law, Power, Voltage Divider, Three-Phase, Resistor Color Code, Capacitor, Inductor, Transformer, LED Resistor)</li>
             <li>Mechanical & fluid calculators (Beam Deflection, Torque, Shaft Power, Gear Design, Hydraulic Jack, Pump Head, Fluid Pressure)</li>
+            <li>Energy & power system calculators (Solar Panel Sizing, Inverter Sizing, Cable Sizing, Battery Bank Sizing, Energy Consumption, Generator Sizing)</li>
             <li>Energy, mechanical, and unit converter tools</li>
             <li>Engineering unit converter</li>
             <li>Responsive design for desktop, tablet, and mobile</li>

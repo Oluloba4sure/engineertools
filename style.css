@@ -230,6 +230,36 @@ main { flex: 1; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
+/* Appliance cards (Version 4) */
+.appliance-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
+.appliance-card {
+  background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;
+}
+.appliance-card .input-group { margin-bottom: 0; }
+.appliance-card .calc-actions { grid-column: 1 / -1; }
+
+/* Bar chart (Energy Consumption) */
+.bar-chart { margin-top: 16px; }
+.bar-chart h3 { font-size: 0.95rem; color: var(--accent); margin-bottom: 10px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { flex: 0 0 120px; font-size: 0.85rem; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; background: var(--bg-input); border-radius: 6px; height: 18px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--accent); border-radius: 6px; min-width: 2px; }
+.bar-value { flex: 0 0 60px; font-size: 0.85rem; color: var(--text-primary); text-align: right; }
+
+/* Responsive */
+@media (max-width: 760px) {
+  .appliance-card { grid-template-columns: 1fr 1fr; }
+  .bar-label { flex-basis: 80px; }
+}
+@media (max-width: 480px) {
+  .appliance-card { grid-template-columns: 1fr; }
+  .bar-row { flex-wrap: wrap; }
+  .bar-label { flex-basis: 100%; }
+  .bar-value { flex-basis: 100%; text-align: left; }
+}
+
 /* Responsive */
 @media (max-width: 760px) {
   .nav-toggle { display: block; }
