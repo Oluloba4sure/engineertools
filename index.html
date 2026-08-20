@@ -11,7 +11,7 @@
     <div class="container header-inner">
       <a href="#" class="logo" onclick="app.navigate('home'); return false;">
         <span class="logo-icon">&#9881;</span>
-        <span class="logo-text">EngineerTools</span>
+        <span class="logo-text">ENGINEERTOOLS</span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" onclick="app.toggleNav()">
@@ -31,183 +31,351 @@
     <section id="view-home" class="view">
       <div class="container">
         <div class="hero">
-          <h1>Free Engineering Calculators</h1>
-          <p class="hero-subtitle">Simple, accurate tools for engineering students, technicians, and professionals.</p>
+          <div class="hero-badge">Free Engineering Calculators</div>
+          <h1 class="hero-title">ENGINEERTOOLS</h1>
+          <p class="hero-subtitle">Fast, accurate and easy-to-use engineering tools for students, technicians, researchers and engineers.</p>
           <div class="search-wrap">
-            <input type="search" id="search-input" placeholder="Search calculators..." aria-label="Search calculators" oninput="app.search(this.value)">
+            <input type="search" id="search-input" placeholder="🔍 Search Engineering Calculators..." aria-label="Search calculators" oninput="app.search(this.value)">
             <span class="search-icon">&#128269;</span>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number" id="stat-calculators">26</span>
+              <span class="stat-label">Calculators</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">7</span>
+              <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Free to Use</span>
+            </div>
           </div>
         </div>
 
         <div class="categories">
-          <div class="category">
-            <h2>Electrical</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x26A1;</span>
+              <div class="category-info">
+                <h2 class="category-title">Electrical</h2>
+                <p class="category-desc">Circuits, power, and electrical systems.</p>
+              </div>
+              <span class="category-count">4 calculators</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="ohms law voltage current resistance" onclick="app.navigate('ohms-law'); return false;">
-                <div class="card-icon">&#x26A1;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x26A1;</span></div>
                 <h3>Ohm's Law</h3>
                 <p>Calculate voltage, current, resistance, and power.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electrical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="electrical power voltage current energy watt kilowatt" onclick="app.navigate('electrical-power'); return false;">
-                <div class="card-icon">&#x23F1;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x23F1;</span></div>
                 <h3>Electrical Power</h3>
                 <p>Calculate power, voltage, current, and energy.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electrical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="voltage divider output voltage resistor network" onclick="app.navigate('voltage-divider'); return false;">
-                <div class="card-icon">&#x2B06;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2B06;</span></div>
                 <h3>Voltage Divider</h3>
                 <p>Calculate output voltage across a divider network.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electrical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="three phase power balanced system line voltage current" onclick="app.navigate('three-phase'); return false;">
-                <div class="card-icon">&#x2B1B;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2B1B;</span></div>
                 <h3>Three-Phase Power</h3>
                 <p>Calculate real, apparent, and reactive power.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electrical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="category">
-            <h2>Electronics</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x1F9F1;</span>
+              <div class="category-info">
+                <h2 class="category-title">Electronics</h2>
+                <p class="category-desc">Components, circuits, and signal processing.</p>
+              </div>
+              <span class="category-count">5 calculators</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="resistor color code bands decode tolerance" onclick="app.navigate('resistor-color'); return false;">
-                <div class="card-icon">&#x1F3A8;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F3A8;</span></div>
                 <h3>Resistor Color Code</h3>
                 <p>Decode resistance values from color bands.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electronics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="capacitor reactance rc time constant capacitance" onclick="app.navigate('capacitor'); return false;">
-                <div class="card-icon">&#x26A1;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x26A1;</span></div>
                 <h3>Capacitor Calculator</h3>
                 <p>Calculate reactance and RC time constants.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electronics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="inductor reactance rl time constant inductance" onclick="app.navigate('inductor'); return false;">
-                <div class="card-icon">&#x1F50C;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F50C;</span></div>
                 <h3>Inductor Calculator</h3>
                 <p>Calculate reactance and RL time constants.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electronics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="LED resistor series current forward voltage" onclick="app.navigate('led-resistor'); return false;">
-                <div class="card-icon">&#x1F4A1;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F4A1;</span></div>
                 <h3>LED Resistor Calculator</h3>
                 <p>Calculate the correct series resistor for an LED.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electronics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="transformer ideal voltage turns ratio primary secondary" onclick="app.navigate('transformer'); return false;">
-                <div class="card-icon">&#x1F9F1;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F9F1;</span></div>
                 <h3>Transformer Calculator</h3>
                 <p>Calculate voltages, turns, and currents.</p>
+                <div class="card-footer">
+                  <span class="card-category">Electronics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="category">
-            <h2>Energy</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x1F50B;</span>
+              <div class="category-info">
+                <h2 class="category-title">Energy</h2>
+                <p class="category-desc">Battery and energy storage calculations.</p>
+              </div>
+              <span class="category-count">1 calculator</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="battery runtime capacity voltage load estimate" onclick="app.navigate('battery-runtime'); return false;">
-                <div class="card-icon">&#x1F50B;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F50B;</span></div>
                 <h3>Battery Runtime</h3>
                 <p>Estimate runtime from battery capacity and load.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="category">
-            <h2>Mechanical</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x2699;</span>
+              <div class="category-info">
+                <h2 class="category-title">Mechanical</h2>
+                <p class="category-desc">Forces, motion, and mechanical design.</p>
+              </div>
+              <span class="category-count">6 calculators</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="motor speed synchronous rpm frequency poles" onclick="app.navigate('motor-speed'); return false;">
-                <div class="card-icon">&#x1F6E0;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F6E0;</span></div>
                 <h3>Motor Speed</h3>
                 <p>Calculate synchronous speed from frequency and poles.</p>
+                <div class="card-footer">
+                  <span class="card-category">Mechanical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="gear ratio teeth driver driven output rpm" onclick="app.navigate('gear-ratio'); return false;">
-                <div class="card-icon">&#x2699;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2699;</span></div>
                 <h3>Gear Ratio</h3>
                 <p>Calculate gear ratio and output speed.</p>
+                <div class="card-footer">
+                  <span class="card-category">Mechanical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="torque force lever arm angle moment" onclick="app.navigate('torque'); return false;">
-                <div class="card-icon">&#x2699;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2699;</span></div>
                 <h3>Torque Calculator</h3>
                 <p>Calculate torque from force and lever arm.</p>
+                <div class="card-footer">
+                  <span class="card-category">Mechanical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="shaft power torque rpm mechanical power horsepower" onclick="app.navigate('shaft-power'); return false;">
-                <div class="card-icon">&#x2699;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2699;</span></div>
                 <h3>Shaft Power</h3>
                 <p>Calculate power from torque and RPM.</p>
+                <div class="card-footer">
+                  <span class="card-category">Mechanical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="gear design module pitch diameter center distance teeth" onclick="app.navigate('gear-design'); return false;">
-                <div class="card-icon">&#x2699;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2699;</span></div>
                 <h3>Gear Design</h3>
                 <p>Gear ratio, pitch diameters, and center distance.</p>
+                <div class="card-footer">
+                  <span class="card-category">Mechanical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="beam deflection load youngs modulus moment of inertia structural" onclick="app.navigate('beam-deflection'); return false;">
-                <div class="card-icon">&#x1F4D0;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F4D0;</span></div>
                 <h3>Beam Deflection</h3>
                 <p>Estimate beam deflection for common configurations.</p>
+                <div class="card-footer">
+                  <span class="card-category">Mechanical</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="category">
-            <h2>Fluid & Hydraulics</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x1F4A7;</span>
+              <div class="category-info">
+                <h2 class="category-title">Fluid & Hydraulics</h2>
+                <p class="category-desc">Fluid mechanics and hydraulic systems.</p>
+              </div>
+              <span class="category-count">3 calculators</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="hydraulic jack pascal law piston force multiplication" onclick="app.navigate('hydraulic-jack'); return false;">
-                <div class="card-icon">&#x1F527;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F527;</span></div>
                 <h3>Hydraulic Jack</h3>
                 <p>Calculate hydraulic force multiplication.</p>
+                <div class="card-footer">
+                  <span class="card-category">Fluid & Hydraulics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="pump head pressure total dynamic head fluid density" onclick="app.navigate('pump-head'); return false;">
-                <div class="card-icon">&#x1F4A7;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F4A7;</span></div>
                 <h3>Pump Head</h3>
                 <p>Calculate pressure head and total dynamic head.</p>
+                <div class="card-footer">
+                  <span class="card-category">Fluid & Hydraulics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="fluid pressure hydrostatic force area conversion bar psi" onclick="app.navigate('fluid-pressure'); return false;">
-                <div class="card-icon">&#x1F4A7;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F4A7;</span></div>
                 <h3>Fluid Pressure</h3>
                 <p>Hydrostatic pressure and pressure conversion.</p>
+                <div class="card-footer">
+                  <span class="card-category">Fluid & Hydraulics</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="category">
-            <h2>Energy & Power Systems</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x2600;</span>
+              <div class="category-info">
+                <h2 class="category-title">Energy & Power Systems</h2>
+                <p class="category-desc">Renewable energy and power system design.</p>
+              </div>
+              <span class="category-count">6 calculators</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="solar solar panel pv photovoltaic sizing capacity" onclick="app.navigate('solar-sizing'); return false;">
-                <div class="card-icon">&#x2600;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2600;</span></div>
                 <h3>Solar Panel Sizing</h3>
                 <p>Estimate required solar array capacity.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy & Power Systems</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="inverter sizing surge power kva appliances" onclick="app.navigate('inverter-sizing'); return false;">
-                <div class="card-icon">&#x26A1;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x26A1;</span></div>
                 <h3>Inverter Sizing</h3>
                 <p>Select an appropriate inverter capacity.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy & Power Systems</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="cable cable size conductor voltage drop wire" onclick="app.navigate('cable-sizing'); return false;">
-                <div class="card-icon">&#x1F50C;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F50C;</span></div>
                 <h3>Cable Sizing</h3>
                 <p>Estimate conductor size and voltage drop.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy & Power Systems</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="battery battery bank capacity amp hours autonomy" onclick="app.navigate('battery-bank'); return false;">
-                <div class="card-icon">&#x1F50B;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F50B;</span></div>
                 <h3>Battery Bank Sizing</h3>
                 <p>Estimate battery capacity for backup systems.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy & Power Systems</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="energy consumption electricity bill power usage appliance" onclick="app.navigate('energy-consumption'); return false;">
-                <div class="card-icon">&#x1F4CA;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x1F4CA;</span></div>
                 <h3>Energy Consumption</h3>
                 <p>Calculate electrical energy use and cost.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy & Power Systems</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
               <a href="#" class="calc-card" data-search="generator generator size kva power backup load" onclick="app.navigate('generator-sizing'); return false;">
-                <div class="card-icon">&#x2699;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x2699;</span></div>
                 <h3>Generator Sizing</h3>
                 <p>Estimate generator capacity for loads.</p>
+                <div class="card-footer">
+                  <span class="card-category">Energy & Power Systems</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="category">
-            <h2>Converters</h2>
+          <div class="category-block">
+            <div class="category-header">
+              <span class="category-icon">&#x21C4;</span>
+              <div class="category-info">
+                <h2 class="category-title">Converters</h2>
+                <p class="category-desc">Engineering unit conversions and calculations.</p>
+              </div>
+              <span class="category-count">1 calculator</span>
+            </div>
             <div class="card-grid">
               <a href="#" class="calc-card" data-search="unit converter length pressure power energy temperature" onclick="app.navigate('unit-converter'); return false;">
-                <div class="card-icon">&#x21C4;</div>
+                <div class="card-icon-wrapper"><span class="card-icon">&#x21C4;</span></div>
                 <h3>Engineering Unit Converter</h3>
                 <p>Convert between common engineering units.</p>
+                <div class="card-footer">
+                  <span class="card-category">Converters</span>
+                  <span class="card-action">Open Calculator <span class="arrow">→</span></span>
+                </div>
               </a>
             </div>
           </div>
@@ -224,10 +392,13 @@
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Ohm's Law Calculator</h1>
+          <div class="calc-badge">Electrical</div>
+          <h1 class="calc-title">Ohm's Law Calculator</h1>
+          <p class="calc-desc">Calculate voltage, current, resistance, and power.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="ol-voltage">Voltage (V)</label>
               <input type="number" id="ol-voltage" step="any" placeholder="e.g. 12">
@@ -241,42 +412,48 @@
               <input type="number" id="ol-resistance" step="any" placeholder="e.g. 6">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateOhmsLaw()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('ohms-law')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateOhmsLaw()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('ohms-law')">↻ Reset</button>
             </div>
             <div id="ol-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ol-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Voltage</span>
-              <span class="result-value" id="ol-r-voltage">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ol-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Current</span>
-              <span class="result-value" id="ol-r-current">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Resistance</span>
-              <span class="result-value" id="ol-r-resistance">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Power</span>
-              <span class="result-value" id="ol-r-power">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>V = I × R</li>
-                <li>I = V / R</li>
-                <li>R = V / I</li>
-                <li>P = V × I</li>
-              </ul>
-            </div>
-            <p class="explanation">Power is calculated only when both voltage and current are known or derived.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-ohms-law"></div>
+            <div id="ol-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Voltage</span>
+                <span class="result-value" id="ol-r-voltage">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Current</span>
+                <span class="result-value" id="ol-r-current">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Resistance</span>
+                <span class="result-value" id="ol-r-resistance">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Power</span>
+                <span class="result-value" id="ol-r-power">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>V = I × R</li>
+                  <li>I = V / R</li>
+                  <li>R = V / I</li>
+                  <li>P = V × I</li>
+                </ul>
+              </div>
+              <p class="explanation">Power is calculated only when both voltage and current are known or derived.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-ohms-law"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -288,11 +465,13 @@
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Resistor Color Code Calculator</h1>
-          <p class="hero-subtitle">Decode resistance values from 4-band resistor color codes.</p>
+          <div class="calc-badge">Electronics</div>
+          <h1 class="calc-title">Resistor Color Code Calculator</h1>
+          <p class="calc-desc">Decode resistance values from 4-band resistor color codes.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="rc-band1">Band 1 (First Digit)</label>
               <select id="rc-band1">
@@ -368,38 +547,44 @@
               <span class="resistor-lead"></span>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateResistorColor()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('resistor-color')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateResistorColor()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('resistor-color')">↻ Reset</button>
             </div>
             <div id="rc-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="rc-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Resistance</span>
-              <span class="result-value" id="rc-r-value">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="rc-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Tolerance</span>
-              <span class="result-value" id="rc-r-tolerance">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Minimum Resistance</span>
-              <span class="result-value" id="rc-r-min">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Maximum Resistance</span>
-              <span class="result-value" id="rc-r-max">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Calculation</h3>
-              <p>Resistance = (Band1 × 10 + Band2) × Multiplier</p>
-              <p id="rc-calc-detail"></p>
-            </div>
-            <p class="explanation">The color bands encode the resistance value and tolerance. The first two bands are significant digits, the third is the multiplier, and the fourth is the tolerance.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-resistor-color"></div>
+            <div id="rc-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Resistance</span>
+                <span class="result-value" id="rc-r-value">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Tolerance</span>
+                <span class="result-value" id="rc-r-tolerance">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Minimum Resistance</span>
+                <span class="result-value" id="rc-r-min">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Maximum Resistance</span>
+                <span class="result-value" id="rc-r-max">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Calculation</h3>
+                <p>Resistance = (Band1 × 10 + Band2) × Multiplier</p>
+                <p id="rc-calc-detail"></p>
+              </div>
+              <p class="explanation">The color bands encode the resistance value and tolerance. The first two bands are significant digits, the third is the multiplier, and the fourth is the tolerance.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-resistor-color"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -411,11 +596,13 @@
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Voltage Divider Calculator</h1>
-          <p class="hero-subtitle">Calculate the output voltage of a resistor divider network.</p>
+          <div class="calc-badge">Electrical</div>
+          <h1 class="calc-title">Voltage Divider Calculator</h1>
+          <p class="calc-desc">Calculate the output voltage of a resistor divider network.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="vd-vin">Input Voltage (Vin) in Volts</label>
               <input type="number" id="vd-vin" step="any" placeholder="e.g. 12">
@@ -440,37 +627,43 @@ R2
 GND
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateVoltageDivider()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('voltage-divider')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateVoltageDivider()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('voltage-divider')">↻ Reset</button>
             </div>
             <div id="vd-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="vd-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Output Voltage (Vout)</span>
-              <span class="result-value" id="vd-r-vout">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="vd-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Voltage across R1</span>
-              <span class="result-value" id="vd-r-vr1">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Voltage across R2</span>
-              <span class="result-value" id="vd-r-vr2">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Total Resistance (R1 + R2)</span>
-              <span class="result-value" id="vd-r-sum">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>Vout = Vin × R2 / (R1 + R2)</p>
-            </div>
-            <p class="explanation">The output voltage is the voltage across R2. The sum of voltages across R1 and R2 equals the input voltage.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-voltage-divider"></div>
+            <div id="vd-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Output Voltage (Vout)</span>
+                <span class="result-value" id="vd-r-vout">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Voltage across R1</span>
+                <span class="result-value" id="vd-r-vr1">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Voltage across R2</span>
+                <span class="result-value" id="vd-r-vr2">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Total Resistance (R1 + R2)</span>
+                <span class="result-value" id="vd-r-sum">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>Vout = Vin × R2 / (R1 + R2)</p>
+              </div>
+              <p class="explanation">The output voltage is the voltage across R2. The sum of voltages across R1 and R2 equals the input voltage.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-voltage-divider"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -482,11 +675,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Capacitor Calculator</h1>
-          <p class="hero-subtitle">Calculate capacitive reactance and RC time constants.</p>
+          <div class="calc-badge">Electronics</div>
+          <h1 class="calc-title">Capacitor Calculator</h1>
+          <p class="calc-desc">Calculate capacitive reactance and RC time constants.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="tabs" role="tablist" aria-label="Capacitor calculation mode">
               <button class="tab-btn active" id="cap-reactance" role="tab" aria-selected="true" onclick="app.switchTab(this, 'cap-reactance-panel')">Capacitive Reactance</button>
               <button class="tab-btn" id="cap-time" role="tab" aria-selected="false" onclick="app.switchTab(this, 'cap-time-panel')">RC Time Constant</button>
@@ -543,40 +738,46 @@ GND
               </div>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateCapacitor()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('capacitor')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateCapacitor()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('capacitor')">↻ Reset</button>
             </div>
             <div id="cap-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="cap-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Capacitive Reactance (Xc)</span>
-              <span class="result-value" id="cap-r-xc">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="cap-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Frequency</span>
-              <span class="result-value" id="cap-r-freq">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Capacitance</span>
-              <span class="result-value" id="cap-r-cap">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">RC Time Constant (τ)</span>
-              <span class="result-value" id="cap-r-tc">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>Xc = 1 / (2πfC)</li>
-                <li>τ = R × C</li>
-              </ul>
-            </div>
-            <p class="explanation">Capacitive reactance is the opposition to AC current. The RC time constant is the time to charge to ~63.2% of the final voltage.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-capacitor"></div>
+            <div id="cap-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Capacitive Reactance (Xc)</span>
+                <span class="result-value" id="cap-r-xc">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Frequency</span>
+                <span class="result-value" id="cap-r-freq">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Capacitance</span>
+                <span class="result-value" id="cap-r-cap">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">RC Time Constant (τ)</span>
+                <span class="result-value" id="cap-r-tc">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>Xc = 1 / (2πfC)</li>
+                  <li>τ = R × C</li>
+                </ul>
+              </div>
+              <p class="explanation">Capacitive reactance is the opposition to AC current. The RC time constant is the time to charge to ~63.2% of the final voltage.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-capacitor"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -588,11 +789,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Inductor Calculator</h1>
-          <p class="hero-subtitle">Calculate inductive reactance and RL time constants.</p>
+          <div class="calc-badge">Electronics</div>
+          <h1 class="calc-title">Inductor Calculator</h1>
+          <p class="calc-desc">Calculate inductive reactance and RL time constants.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="tabs" role="tablist" aria-label="Inductor calculation mode">
               <button class="tab-btn active" id="ind-reactance" role="tab" aria-selected="true" onclick="app.switchTab(this, 'ind-reactance-panel')">Inductive Reactance</button>
               <button class="tab-btn" id="ind-time" role="tab" aria-selected="false" onclick="app.switchTab(this, 'ind-time-panel')">RL Time Constant</button>
@@ -645,40 +848,46 @@ GND
               </div>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateInductor()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('inductor')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateInductor()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('inductor')">↻ Reset</button>
             </div>
             <div id="ind-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ind-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Inductive Reactance (XL)</span>
-              <span class="result-value" id="ind-r-xl">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ind-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Frequency</span>
-              <span class="result-value" id="ind-r-freq">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Inductance</span>
-              <span class="result-value" id="ind-r-ind">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">RL Time Constant (τ)</span>
-              <span class="result-value" id="ind-r-tc">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>XL = 2πfL</li>
-                <li>τ = L / R</li>
-              </ul>
-            </div>
-            <p class="explanation">Inductive reactance is the opposition to AC current. The RL time constant is the time for current to reach ~63.2% of its final value.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-inductor"></div>
+            <div id="ind-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Inductive Reactance (XL)</span>
+                <span class="result-value" id="ind-r-xl">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Frequency</span>
+                <span class="result-value" id="ind-r-freq">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Inductance</span>
+                <span class="result-value" id="ind-r-ind">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">RL Time Constant (τ)</span>
+                <span class="result-value" id="ind-r-tc">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>XL = 2πfL</li>
+                  <li>τ = L / R</li>
+                </ul>
+              </div>
+              <p class="explanation">Inductive reactance is the opposition to AC current. The RL time constant is the time for current to reach ~63.2% of its final value.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-inductor"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -690,11 +899,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Transformer Calculator</h1>
-          <p class="hero-subtitle">Calculate voltages, turns, and currents for an ideal transformer.</p>
+          <div class="calc-badge">Electronics</div>
+          <h1 class="calc-title">Transformer Calculator</h1>
+          <p class="calc-desc">Calculate voltages, turns, and currents for an ideal transformer.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="tr-vp">Primary Voltage (Vp) in Volts</label>
               <input type="number" id="tr-vp" step="any" placeholder="e.g. 240">
@@ -720,55 +931,61 @@ GND
               <input type="number" id="tr-is" step="any" placeholder="e.g. 10">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateTransformer()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('transformer')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateTransformer()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('transformer')">↻ Reset</button>
             </div>
             <div id="tr-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="tr-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Primary Voltage</span>
-              <span class="result-value" id="tr-r-vp">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="tr-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Secondary Voltage</span>
-              <span class="result-value" id="tr-r-vs">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Primary Turns</span>
-              <span class="result-value" id="tr-r-np">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Secondary Turns</span>
-              <span class="result-value" id="tr-r-ns">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Turns Ratio</span>
-              <span class="result-value" id="tr-r-ratio">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Primary Current</span>
-              <span class="result-value" id="tr-r-ip">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Secondary Current</span>
-              <span class="result-value" id="tr-r-is">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>Vp / Vs = Np / Ns</li>
-                <li>Vp × Ip = Vs × Is</li>
-              </ul>
-            </div>
-            <div class="disclaimer-box">
-              <h3>Important Note</h3>
-              <p>This calculator uses an ideal transformer model. Real transformers have losses and efficiency less than 100%.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-transformer"></div>
+            <div id="tr-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Primary Voltage</span>
+                <span class="result-value" id="tr-r-vp">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Secondary Voltage</span>
+                <span class="result-value" id="tr-r-vs">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Primary Turns</span>
+                <span class="result-value" id="tr-r-np">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Secondary Turns</span>
+                <span class="result-value" id="tr-r-ns">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Turns Ratio</span>
+                <span class="result-value" id="tr-r-ratio">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Primary Current</span>
+                <span class="result-value" id="tr-r-ip">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Secondary Current</span>
+                <span class="result-value" id="tr-r-is">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>Vp / Vs = Np / Ns</li>
+                  <li>Vp × Ip = Vs × Is</li>
+                </ul>
+              </div>
+              <div class="disclaimer-box">
+                <h3>Important Note</h3>
+                <p>This calculator uses an ideal transformer model. Real transformers have losses and efficiency less than 100%.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-transformer"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -780,11 +997,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>LED Resistor Calculator</h1>
-          <p class="hero-subtitle">Calculate the correct series resistor for an LED.</p>
+          <div class="calc-badge">Electronics</div>
+          <h1 class="calc-title">LED Resistor Calculator</h1>
+          <p class="calc-desc">Calculate the correct series resistor for an LED.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="led-vs">Supply Voltage (Vs) in Volts</label>
               <input type="number" id="led-vs" step="any" placeholder="e.g. 12">
@@ -807,41 +1026,47 @@ GND
               </div>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateLEDResistor()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('led-resistor')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateLEDResistor()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('led-resistor')">↻ Reset</button>
             </div>
             <div id="led-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="led-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Required Resistor</span>
-              <span class="result-value" id="led-r-r">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="led-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Recommended Standard Value</span>
-              <span class="result-value" id="led-r-std">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Resistor Power</span>
-              <span class="result-value" id="led-r-p">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Recommended Min. Power Rating</span>
-              <span class="result-value" id="led-r-rec">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>R = (Vs - Vf) / I</p>
-              <p>P = (Vs - Vf) × I</p>
-            </div>
-            <div class="disclaimer-box">
-              <h3>Safety Note</h3>
-              <p>Use a suitable resistor power rating and verify the LED's maximum forward current before connecting the circuit.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-led-resistor"></div>
+            <div id="led-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Required Resistor</span>
+                <span class="result-value" id="led-r-r">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Recommended Standard Value</span>
+                <span class="result-value" id="led-r-std">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Resistor Power</span>
+                <span class="result-value" id="led-r-p">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Recommended Min. Power Rating</span>
+                <span class="result-value" id="led-r-rec">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>R = (Vs - Vf) / I</p>
+                <p>P = (Vs - Vf) × I</p>
+              </div>
+              <div class="disclaimer-box">
+                <h3>Safety Note</h3>
+                <p>Use a suitable resistor power rating and verify the LED's maximum forward current before connecting the circuit.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-led-resistor"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -853,11 +1078,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Three-Phase Power Calculator</h1>
-          <p class="hero-subtitle">Calculate real, apparent, and reactive power in a balanced three-phase system.</p>
+          <div class="calc-badge">Electrical</div>
+          <h1 class="calc-title">Three-Phase Power Calculator</h1>
+          <p class="calc-desc">Calculate real, apparent, and reactive power in a balanced three-phase system.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="mode-select">
               <label for="tp-mode">Calculation Mode</label>
               <select id="tp-mode">
@@ -899,44 +1126,50 @@ GND
               </select>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateThreePhase()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('three-phase')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateThreePhase()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('three-phase')">↻ Reset</button>
             </div>
             <div id="tp-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="tp-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Real Power (P)</span>
-              <span class="result-value" id="tp-r-p">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="tp-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Apparent Power (S)</span>
-              <span class="result-value" id="tp-r-s">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Reactive Power (Q)</span>
-              <span class="result-value" id="tp-r-q">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Power Factor</span>
-              <span class="result-value" id="tp-r-pf">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>P = √3 × VL × IL × PF</li>
-                <li>S = √3 × VL × IL</li>
-                <li>Q = √(S² - P²)</li>
-              </ul>
-            </div>
-            <div class="disclaimer-box">
-              <h3>Assumption</h3>
-              <p>The calculator assumes a balanced three-phase system with line-to-line voltage and line current.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-three-phase"></div>
+            <div id="tp-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Real Power (P)</span>
+                <span class="result-value" id="tp-r-p">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Apparent Power (S)</span>
+                <span class="result-value" id="tp-r-s">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Reactive Power (Q)</span>
+                <span class="result-value" id="tp-r-q">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Power Factor</span>
+                <span class="result-value" id="tp-r-pf">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>P = √3 × VL × IL × PF</li>
+                  <li>S = √3 × VL × IL</li>
+                  <li>Q = √(S² - P²)</li>
+                </ul>
+              </div>
+              <div class="disclaimer-box">
+                <h3>Assumption</h3>
+                <p>The calculator assumes a balanced three-phase system with line-to-line voltage and line current.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-three-phase"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -948,10 +1181,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Electrical Power Calculator</h1>
+          <div class="calc-badge">Electrical</div>
+          <h1 class="calc-title">Electrical Power Calculator</h1>
+          <p class="calc-desc">Calculate power, voltage, current, and energy.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="ep-power">Power (P)</label>
               <select id="ep-power-unit">
@@ -973,40 +1209,46 @@ GND
               <input type="number" id="ep-time" step="any" placeholder="e.g. 2">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateElectricalPower()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('electrical-power')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateElectricalPower()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('electrical-power')">↻ Reset</button>
             </div>
             <div id="ep-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ep-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Power</span>
-              <span class="result-value" id="ep-r-power">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ep-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Voltage</span>
-              <span class="result-value" id="ep-r-voltage">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Current</span>
-              <span class="result-value" id="ep-r-current">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Energy</span>
-              <span class="result-value" id="ep-r-energy">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>P = V × I</li>
-                <li>E = P × t</li>
-              </ul>
-            </div>
-            <p class="explanation">Energy is calculated only when power and time are known.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-electrical-power"></div>
+            <div id="ep-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Power</span>
+                <span class="result-value" id="ep-r-power">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Voltage</span>
+                <span class="result-value" id="ep-r-voltage">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Current</span>
+                <span class="result-value" id="ep-r-current">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Energy</span>
+                <span class="result-value" id="ep-r-energy">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>P = V × I</li>
+                  <li>E = P × t</li>
+                </ul>
+              </div>
+              <p class="explanation">Energy is calculated only when power and time are known.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-electrical-power"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1018,10 +1260,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Battery Runtime Calculator</h1>
+          <div class="calc-badge">Energy</div>
+          <h1 class="calc-title">Battery Runtime Calculator</h1>
+          <p class="calc-desc">Estimate runtime from battery capacity and load.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="br-voltage">Battery Voltage (V)</label>
               <input type="number" id="br-voltage" step="any" placeholder="e.g. 12">
@@ -1039,29 +1284,35 @@ GND
               <input type="number" id="br-efficiency" step="any" placeholder="e.g. 90" min="0" max="100">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateBatteryRuntime()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('battery-runtime')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateBatteryRuntime()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('battery-runtime')">↻ Reset</button>
             </div>
             <div id="br-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="br-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Estimated Runtime</span>
-              <span class="result-value" id="br-r-runtime">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="br-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="disclaimer-box">
-              <h3>Important Disclaimer</h3>
-              <p>This is an estimate only. Actual runtime depends on battery condition, discharge characteristics, temperature, age, and actual load profile.</p>
-            </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>Runtime (h) = (V × Ah × η) / Load</p>
-              <p>where η = efficiency / 100</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-battery-runtime"></div>
+            <div id="br-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Estimated Runtime</span>
+                <span class="result-value" id="br-r-runtime">—</span>
+              </div>
+              <div class="disclaimer-box">
+                <h3>Important Disclaimer</h3>
+                <p>This is an estimate only. Actual runtime depends on battery condition, discharge characteristics, temperature, age, and actual load profile.</p>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>Runtime (h) = (V × Ah × η) / Load</p>
+                <p>where η = efficiency / 100</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-battery-runtime"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1073,10 +1324,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Motor Speed Calculator</h1>
+          <div class="calc-badge">Mechanical</div>
+          <h1 class="calc-title">Motor Speed Calculator</h1>
+          <p class="calc-desc">Calculate synchronous speed from frequency and poles.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="ms-frequency">Frequency (f) in Hz</label>
               <input type="number" id="ms-frequency" step="any" placeholder="e.g. 60">
@@ -1086,28 +1340,34 @@ GND
               <input type="number" id="ms-poles" step="1" placeholder="e.g. 4" min="2">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateMotorSpeed()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('motor-speed')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateMotorSpeed()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('motor-speed')">↻ Reset</button>
             </div>
             <div id="ms-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ms-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Synchronous Speed</span>
-              <span class="result-value" id="ms-r-speed">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ms-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>Ns = 120 × f / P</p>
-              <p>Ns = synchronous speed in RPM</p>
-              <p>f = frequency in Hz</p>
-              <p>P = number of poles</p>
-            </div>
-            <p class="explanation">This gives the theoretical synchronous speed. Actual induction motor speed will be slightly lower due to slip.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-motor-speed"></div>
+            <div id="ms-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Synchronous Speed</span>
+                <span class="result-value" id="ms-r-speed">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>Ns = 120 × f / P</p>
+                <p>Ns = synchronous speed in RPM</p>
+                <p>f = frequency in Hz</p>
+                <p>P = number of poles</p>
+              </div>
+              <p class="explanation">This gives the theoretical synchronous speed. Actual induction motor speed will be slightly lower due to slip.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-motor-speed"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1119,10 +1379,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Gear Ratio Calculator</h1>
+          <div class="calc-badge">Mechanical</div>
+          <h1 class="calc-title">Gear Ratio Calculator</h1>
+          <p class="calc-desc">Calculate gear ratio and output speed.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="gr-driver">Driver Gear Teeth</label>
               <input type="number" id="gr-driver" step="1" placeholder="e.g. 20" min="1">
@@ -1136,32 +1399,38 @@ GND
               <input type="number" id="gr-input-rpm" step="any" placeholder="e.g. 1500">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateGearRatio()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('gear-ratio')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateGearRatio()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('gear-ratio')">↻ Reset</button>
             </div>
             <div id="gr-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="gr-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Gear Ratio</span>
-              <span class="result-value" id="gr-r-ratio">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="gr-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Output RPM</span>
-              <span class="result-value" id="gr-r-output">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>Gear Ratio = Driven Teeth / Driver Teeth</li>
-                <li>Output RPM = Input RPM / Gear Ratio</li>
-              </ul>
-            </div>
-            <p class="explanation">A ratio greater than 1 indicates speed reduction and torque multiplication.</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-gear-ratio"></div>
+            <div id="gr-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Gear Ratio</span>
+                <span class="result-value" id="gr-r-ratio">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Output RPM</span>
+                <span class="result-value" id="gr-r-output">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>Gear Ratio = Driven Teeth / Driver Teeth</li>
+                  <li>Output RPM = Input RPM / Gear Ratio</li>
+                </ul>
+              </div>
+              <p class="explanation">A ratio greater than 1 indicates speed reduction and torque multiplication.</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-gear-ratio"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1173,11 +1442,13 @@ GND
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Beam Deflection Calculator</h1>
-          <p class="hero-subtitle">Estimate maximum deflection for common beam configurations.</p>
+          <div class="calc-badge">Mechanical</div>
+          <h1 class="calc-title">Beam Deflection Calculator</h1>
+          <p class="calc-desc">Estimate maximum deflection for common beam configurations.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="mode-select">
               <label for="bd-type">Beam Type</label>
               <select id="bd-type" onchange="app.updateBeamVisual()">
@@ -1251,31 +1522,37 @@ GND
             <div class="diagram" id="bd-diagram" aria-label="Beam diagram">
 Support ▲────────────▲
         ↓ P
-        </div>
+            </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateBeamDeflection()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('beam-deflection')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateBeamDeflection()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('beam-deflection')">↻ Reset</button>
             </div>
             <div id="bd-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="bd-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Maximum Deflection</span>
-              <span class="result-value" id="bd-r-deflection">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="bd-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p id="bd-r-formula">—</p>
-            </div>
-            <p class="explanation" id="bd-r-steps">—</p>
-            <div class="disclaimer-box">
-              <h3>Important Note</h3>
-              <p>This calculator uses simplified beam theory and is intended for educational and preliminary calculations. It should not replace detailed structural analysis or professional engineering design.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-beam-deflection"></div>
+            <div id="bd-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Maximum Deflection</span>
+                <span class="result-value" id="bd-r-deflection">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p id="bd-r-formula">—</p>
+              </div>
+              <p class="explanation" id="bd-r-steps">—</p>
+              <div class="disclaimer-box">
+                <h3>Important Note</h3>
+                <p>This calculator uses simplified beam theory and is intended for educational and preliminary calculations. It should not replace detailed structural analysis or professional engineering design.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-beam-deflection"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1287,11 +1564,13 @@ Support ▲────────────▲
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Torque Calculator</h1>
-          <p class="hero-subtitle">Calculate torque from force, lever arm, and angle.</p>
+          <div class="calc-badge">Mechanical</div>
+          <h1 class="calc-title">Torque Calculator</h1>
+          <p class="calc-desc">Calculate torque from force, lever arm, and angle.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="tq-force">Force (F)</label>
               <div class="unit-row">
@@ -1330,33 +1609,39 @@ Force ↓
   r      O (pivot)
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateTorque()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('torque')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateTorque()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('torque')">↻ Reset</button>
             </div>
             <div id="tq-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="tq-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Torque (N·m)</span>
-              <span class="result-value" id="tq-r-nm">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="tq-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Torque (N·mm)</span>
-              <span class="result-value" id="tq-r-nmm">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Torque (kN·m)</span>
-              <span class="result-value" id="tq-r-knm">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>τ = r × F × sin(θ)</p>
-            </div>
-            <p class="explanation" id="tq-r-steps">—</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-torque"></div>
+            <div id="tq-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Torque (N·m)</span>
+                <span class="result-value" id="tq-r-nm">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Torque (N·mm)</span>
+                <span class="result-value" id="tq-r-nmm">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Torque (kN·m)</span>
+                <span class="result-value" id="tq-r-knm">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>τ = r × F × sin(θ)</p>
+              </div>
+              <p class="explanation" id="tq-r-steps">—</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-torque"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1368,11 +1653,13 @@ Force ↓
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Shaft Power Calculator</h1>
-          <p class="hero-subtitle">Calculate mechanical power from torque and rotational speed.</p>
+          <div class="calc-badge">Mechanical</div>
+          <h1 class="calc-title">Shaft Power Calculator</h1>
+          <p class="calc-desc">Calculate mechanical power from torque and rotational speed.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="sp-torque">Torque (T) in N·m</label>
               <input type="number" id="sp-torque" step="any" placeholder="e.g. 50">
@@ -1382,33 +1669,39 @@ Force ↓
               <input type="number" id="sp-rpm" step="any" placeholder="e.g. 1500">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateShaftPower()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('shaft-power')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateShaftPower()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('shaft-power')">↻ Reset</button>
             </div>
             <div id="sp-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="sp-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Power (W)</span>
-              <span class="result-value" id="sp-r-w">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="sp-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Power (kW)</span>
-              <span class="result-value" id="sp-r-kw">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Power (hp)</span>
-              <span class="result-value" id="sp-r-hp">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>P = 2πNT / 60</p>
-            </div>
-            <p class="explanation" id="sp-r-steps">—</p>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-shaft-power"></div>
+            <div id="sp-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Power (W)</span>
+                <span class="result-value" id="sp-r-w">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Power (kW)</span>
+                <span class="result-value" id="sp-r-kw">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Power (hp)</span>
+                <span class="result-value" id="sp-r-hp">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>P = 2πNT / 60</p>
+              </div>
+              <p class="explanation" id="sp-r-steps">—</p>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-shaft-power"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1420,11 +1713,13 @@ Force ↓
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Gear Design Calculator</h1>
-          <p class="hero-subtitle">Preliminary gear geometry and ratio calculations.</p>
+          <div class="calc-badge">Mechanical</div>
+          <h1 class="calc-title">Gear Design Calculator</h1>
+          <p class="calc-desc">Preliminary gear geometry and ratio calculations.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="gd-z1">Driver Gear Teeth (Z₁)</label>
               <input type="number" id="gd-z1" step="1" placeholder="e.g. 20" min="1">
@@ -1451,49 +1746,55 @@ Driver Gear → Driven Gear
   (Z₁)          (Z₂)
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateGearDesign()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('gear-design')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateGearDesign()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('gear-design')">↻ Reset</button>
             </div>
             <div id="gd-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="gd-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Gear Ratio</span>
-              <span class="result-value" id="gd-r-ratio">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="gd-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Output RPM (N₂)</span>
-              <span class="result-value" id="gd-r-output">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Driver Pitch Diameter</span>
-              <span class="result-value" id="gd-r-d1">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Driven Pitch Diameter</span>
-              <span class="result-value" id="gd-r-d2">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Center Distance</span>
-              <span class="result-value" id="gd-r-center">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>i = Z₂ / Z₁</li>
-                <li>N₂ = N₁ × Z₁ / Z₂</li>
-                <li>d = m × Z</li>
-                <li>a = (d₁ + d₂) / 2</li>
-              </ul>
-            </div>
-            <div class="disclaimer-box">
-              <h3>Important Note</h3>
-              <p>This is a simplified gear calculator and does not perform complete gear-strength, wear, contact-stress, or AGMA/ISO design verification.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-gear-design"></div>
+            <div id="gd-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Gear Ratio</span>
+                <span class="result-value" id="gd-r-ratio">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Output RPM (N₂)</span>
+                <span class="result-value" id="gd-r-output">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Driver Pitch Diameter</span>
+                <span class="result-value" id="gd-r-d1">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Driven Pitch Diameter</span>
+                <span class="result-value" id="gd-r-d2">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Center Distance</span>
+                <span class="result-value" id="gd-r-center">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>i = Z₂ / Z₁</li>
+                  <li>N₂ = N₁ × Z₁ / Z₂</li>
+                  <li>d = m × Z</li>
+                  <li>a = (d₁ + d₂) / 2</li>
+                </ul>
+              </div>
+              <div class="disclaimer-box">
+                <h3>Important Note</h3>
+                <p>This is a simplified gear calculator and does not perform complete gear-strength, wear, contact-stress, or AGMA/ISO design verification.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-gear-design"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1505,11 +1806,13 @@ Driver Gear → Driven Gear
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Hydraulic Jack Calculator</h1>
-          <p class="hero-subtitle">Calculate hydraulic force multiplication using Pascal's law.</p>
+          <div class="calc-badge">Fluid & Hydraulics</div>
+          <h1 class="calc-title">Hydraulic Jack Calculator</h1>
+          <p class="calc-desc">Calculate hydraulic force multiplication using Pascal's law.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="hj-force">Small Piston Force (F₁) in N</label>
               <input type="number" id="hj-force" step="any" placeholder="e.g. 100">
@@ -1525,64 +1828,70 @@ Driver Gear → Driven Gear
             <div class="diagram" aria-label="Hydraulic jack diagram">
    Load
     ↓
-┌─────────┐
-│ Large   │
-│ Piston  │
-└────┬────┘
-     │
+ ┌─────────┐
+ │ Large   │
+ │ Piston  │
+ └────┬────┘
+      │
 Hydraulic
 Fluid
-     │
-┌────┴────┐
-│ Small   │
-│ Piston  │
-└─────────┘
+      │
+ ┌────┴────┐
+ │ Small   │
+ │ Piston  │
+ └─────────┘
     ↑
   Force
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateHydraulicJack()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('hydraulic-jack')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateHydraulicJack()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('hydraulic-jack')">↻ Reset</button>
             </div>
             <div id="hj-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="hj-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Small Piston Area</span>
-              <span class="result-value" id="hj-r-a1">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="hj-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Large Piston Area</span>
-              <span class="result-value" id="hj-r-a2">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Hydraulic Pressure</span>
-              <span class="result-value" id="hj-r-pressure">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Force Multiplication Ratio</span>
-              <span class="result-value" id="hj-r-ratio">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Large Piston Force (F₂)</span>
-              <span class="result-value" id="hj-r-f2">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>A = πd² / 4</li>
-                <li>P = F / A</li>
-                <li>F₂ = F₁ × A₂ / A₁</li>
-              </ul>
-            </div>
-            <div class="disclaimer-box">
-              <h3>Assumption</h3>
-              <p>Assumes ideal hydraulic force transmission and does not account for mechanical losses.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-hydraulic-jack"></div>
+            <div id="hj-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Small Piston Area</span>
+                <span class="result-value" id="hj-r-a1">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Large Piston Area</span>
+                <span class="result-value" id="hj-r-a2">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Hydraulic Pressure</span>
+                <span class="result-value" id="hj-r-pressure">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Force Multiplication Ratio</span>
+                <span class="result-value" id="hj-r-ratio">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Large Piston Force (F₂)</span>
+                <span class="result-value" id="hj-r-f2">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>A = πd² / 4</li>
+                  <li>P = F / A</li>
+                  <li>F₂ = F₁ × A₂ / A₁</li>
+                </ul>
+              </div>
+              <div class="disclaimer-box">
+                <h3>Assumption</h3>
+                <p>Assumes ideal hydraulic force transmission and does not account for mechanical losses.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-hydraulic-jack"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1594,11 +1903,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Pump Head Calculator</h1>
-          <p class="hero-subtitle">Calculate pressure head and total dynamic head.</p>
+          <div class="calc-badge">Fluid & Hydraulics</div>
+          <h1 class="calc-title">Pump Head Calculator</h1>
+          <p class="calc-desc">Calculate pressure head and total dynamic head.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="ph-pressure">Pressure (P)</label>
               <div class="unit-row">
@@ -1631,36 +1942,42 @@ Fluid
               <input type="number" id="ph-velocity" step="any" placeholder="e.g. 0.5">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculatePumpHead()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('pump-head')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculatePumpHead()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('pump-head')">↻ Reset</button>
             </div>
             <div id="ph-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ph-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Pressure Head (H)</span>
-              <span class="result-value" id="ph-r-head">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ph-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Total Dynamic Head</span>
-              <span class="result-value" id="ph-r-total">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>H = P / (ρg)</li>
-                <li>H_total = H_static + H_friction + H_velocity</li>
-              </ul>
-            </div>
-            <p class="explanation" id="ph-r-steps">—</p>
-            <div class="disclaimer-box">
-              <h3>Assumption</h3>
-              <p>Basic head calculation; actual pump selection requires system-specific flow, friction losses, efficiency and manufacturer pump curves.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-pump-head"></div>
+            <div id="ph-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Pressure Head (H)</span>
+                <span class="result-value" id="ph-r-head">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Total Dynamic Head</span>
+                <span class="result-value" id="ph-r-total">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>H = P / (ρg)</li>
+                  <li>H_total = H_static + H_friction + H_velocity</li>
+                </ul>
+              </div>
+              <p class="explanation" id="ph-r-steps">—</p>
+              <div class="disclaimer-box">
+                <h3>Assumption</h3>
+                <p>Basic head calculation; actual pump selection requires system-specific flow, friction losses, efficiency and manufacturer pump curves.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-pump-head"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1672,11 +1989,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Fluid Pressure Calculator</h1>
-          <p class="hero-subtitle">Calculate hydrostatic pressure and pressure from force and area.</p>
+          <div class="calc-badge">Fluid & Hydraulics</div>
+          <h1 class="calc-title">Fluid Pressure Calculator</h1>
+          <p class="calc-desc">Calculate hydrostatic pressure and pressure from force and area.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="tabs" role="tablist" aria-label="Fluid pressure calculation mode">
               <button class="tab-btn active" id="fp-hydro" role="tab" aria-selected="true" onclick="app.switchTab(this, 'fp-hydro-panel')">Hydrostatic Pressure</button>
               <button class="tab-btn" id="fp-force" role="tab" aria-selected="false" onclick="app.switchTab(this, 'fp-force-panel')">Force / Area</button>
@@ -1722,48 +2041,54 @@ Fluid
               </select>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateFluidPressure()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('fluid-pressure')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateFluidPressure()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('fluid-pressure')">↻ Reset</button>
             </div>
             <div id="fp-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="fp-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Pressure</span>
-              <span class="result-value" id="fp-r-pressure">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="fp-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Pressure (Pa)</span>
-              <span class="result-value" id="fp-r-pa">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Pressure (kPa)</span>
-              <span class="result-value" id="fp-r-kpa">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Pressure (bar)</span>
-              <span class="result-value" id="fp-r-bar">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Pressure (psi)</span>
-              <span class="result-value" id="fp-r-psi">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>P = ρgh</li>
-                <li>P = F / A</li>
-              </ul>
-            </div>
-            <p class="explanation" id="fp-r-steps">—</p>
-            <div class="disclaimer-box">
-              <h3>Assumption</h3>
-              <p>Hydrostatic pressure assumes a static fluid and known density.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-fluid-pressure"></div>
+            <div id="fp-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Pressure</span>
+                <span class="result-value" id="fp-r-pressure">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Pressure (Pa)</span>
+                <span class="result-value" id="fp-r-pa">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Pressure (kPa)</span>
+                <span class="result-value" id="fp-r-kpa">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Pressure (bar)</span>
+                <span class="result-value" id="fp-r-bar">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Pressure (psi)</span>
+                <span class="result-value" id="fp-r-psi">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>P = ρgh</li>
+                  <li>P = F / A</li>
+                </ul>
+              </div>
+              <p class="explanation" id="fp-r-steps">—</p>
+              <div class="disclaimer-box">
+                <h3>Assumption</h3>
+                <p>Hydrostatic pressure assumes a static fluid and known density.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-fluid-pressure"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1775,11 +2100,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Solar Panel Sizing Calculator</h1>
-          <p class="hero-subtitle">Estimate the required photovoltaic array capacity for your daily energy needs.</p>
+          <div class="calc-badge">Energy & Power Systems</div>
+          <h1 class="calc-title">Solar Panel Sizing Calculator</h1>
+          <p class="calc-desc">Estimate the required photovoltaic array capacity for your daily energy needs.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="ss-energy">Daily Energy Requirement</label>
               <div class="unit-row">
@@ -1821,46 +2148,52 @@ Fluid
               </div>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateSolarSizing()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('solar-sizing')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateSolarSizing()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('solar-sizing')">↻ Reset</button>
             </div>
             <div id="ss-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ss-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Daily Energy Requirement</span>
-              <span class="result-value" id="ss-r-energy">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ss-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Required Solar Array Capacity</span>
-              <span class="result-value" id="ss-r-pv">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Recommended Number of Panels</span>
-              <span class="result-value" id="ss-r-panels">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Actual Installed PV Capacity</span>
-              <span class="result-value" id="ss-r-installed">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Estimated Daily Solar Production</span>
-              <span class="result-value" id="ss-r-production">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formula Used</h3>
-              <p>PV Power = E / (H × η)</p>
-              <p>Number of Panels = PV Power / Panel Rating (rounded up)</p>
-            </div>
-            <p class="explanation" id="ss-r-steps">—</p>
-            <div class="disclaimer-box">
-              <h3>Important Disclaimer</h3>
-              <p>This calculator provides preliminary solar-system sizing only. Actual system design should consider location-specific solar irradiation, temperature, shading, panel orientation, battery losses, inverter efficiency, wiring losses and applicable electrical standards.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-solar-sizing"></div>
+            <div id="ss-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Daily Energy Requirement</span>
+                <span class="result-value" id="ss-r-energy">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Required Solar Array Capacity</span>
+                <span class="result-value" id="ss-r-pv">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Recommended Number of Panels</span>
+                <span class="result-value" id="ss-r-panels">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Actual Installed PV Capacity</span>
+                <span class="result-value" id="ss-r-installed">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Estimated Daily Solar Production</span>
+                <span class="result-value" id="ss-r-production">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formula Used</h3>
+                <p>PV Power = E / (H × η)</p>
+                <p>Number of Panels = PV Power / Panel Rating (rounded up)</p>
+              </div>
+              <p class="explanation" id="ss-r-steps">—</p>
+              <div class="disclaimer-box">
+                <h3>Important Disclaimer</h3>
+                <p>This calculator provides preliminary solar-system sizing only. Actual system design should consider location-specific solar irradiation, temperature, shading, panel orientation, battery losses, inverter efficiency, wiring losses and applicable electrical standards.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-solar-sizing"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1872,11 +2205,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Inverter Sizing Calculator</h1>
-          <p class="hero-subtitle">Estimate the minimum inverter capacity required for your appliances.</p>
+          <div class="calc-badge">Energy & Power Systems</div>
+          <h1 class="calc-title">Inverter Sizing Calculator</h1>
+          <p class="calc-desc">Estimate the minimum inverter capacity required for your appliances.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="inv-margin">Design Margin (%)</label>
               <input type="number" id="inv-margin" step="any" placeholder="e.g. 20" min="0" value="20">
@@ -1886,50 +2221,55 @@ Fluid
               <button class="btn btn-secondary" onclick="app.addApplianceRow('inv-appliances', 'inverter')">+ Add Appliance</button>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateInverterSizing()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('inverter-sizing')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateInverterSizing()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('inverter-sizing')">↻ Reset</button>
             </div>
             <div id="inv-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="inv-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Total Running Load</span>
-              <span class="result-value" id="inv-r-running">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="inv-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
-            <div class="result-item">
-              <span class="result-label">Estimated Surge Requirement</span>
-              <span class="result-value" id="inv-r-surge">—</span>
+            <div id="inv-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Total Running Load</span>
+                <span class="result-value" id="inv-r-running">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Estimated Surge Requirement</span>
+                <span class="result-value" id="inv-r-surge">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Recommended Continuous Capacity</span>
+                <span class="result-value" id="inv-r-continuous">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Recommended Inverter Rating</span>
+                <span class="result-value" id="inv-r-rating">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Minimum Surge Capacity</span>
+                <span class="result-value" id="inv-r-surge-cap">—</span>
+              </div>
+              <div class="formula-box">
+                <h3>Formulas Used</h3>
+                <ul>
+                  <li>Total Running = Σ (Running Power × Quantity)</li>
+                  <li>Recommended = Total Running × (1 + Margin/100)</li>
+                </ul>
+              </div>
+              <p class="explanation">kW = real power. kVA = apparent power. For resistive loads, kVA ≈ kW. For inductive loads, kVA = kW / PF.</p>
+              <div class="disclaimer-box">
+                <h3>Important Note</h3>
+                <p>Actual inverter selection should consider appliance starting currents, power factor, inverter waveform, battery voltage, manufacturer specifications and applicable standards.</p>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-inverter-sizing"></div>
+              </div>
             </div>
-            <div class="result-item">
-              <span class="result-label">Recommended Continuous Capacity</span>
-              <span class="result-value" id="inv-r-continuous">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Recommended Inverter Rating</span>
-              <span class="result-value" id="inv-r-rating">—</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Minimum Surge Capacity</span>
-              <span class="result-value" id="inv-r-surge-cap">—</span>
-            </div>
-            <div class="formula-box">
-              <h3>Formulas Used</h3>
-              <ul>
-                <li>Total Running = Σ (Running Power × Quantity)</li>
-                <li>Recommended = Total Running × (1 + Margin/100)</li>
-              </ul>
-            </div>
-            <p class="explanation">kW = real power. kVA = apparent power. For resistive loads, kVA ≈ kW. For inductive loads, kVA = kW / PF.</p>
-            <div class="disclaimer-box">
-              <h3>Important Note</h3>
-              <p>Actual inverter selection should consider appliance starting currents, power factor, inverter waveform, battery voltage, manufacturer specifications and applicable standards.</p>
-            </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-inverter-sizing"></div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -1939,11 +2279,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Cable Sizing Calculator</h1>
-          <p class="hero-subtitle">Estimate conductor size based on load current and voltage drop.</p>
+          <div class="calc-badge">Energy & Power Systems</div>
+          <h1 class="calc-title">Cable Sizing Calculator</h1>
+          <p class="calc-desc">Estimate conductor size based on load current and voltage drop.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="cs-power">Load Power</label>
               <div class="unit-row">
@@ -1988,17 +2330,22 @@ Fluid
               <input type="number" id="cs-vd" step="any" placeholder="e.g. 3" min="0">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateCableSizing()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('cable-sizing')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateCableSizing()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('cable-sizing')">↻ Reset</button>
             </div>
             <div id="cs-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="cs-results" hidden>
-            <h2>Results</h2>
-            <div class="result-item">
-              <span class="result-label">Load Current</span>
-              <span class="result-value" id="cs-r-current">—</span>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="cs-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
             </div>
+            <div id="cs-results" class="results-container" hidden>
+              <div class="result-item">
+                <span class="result-label">Load Current</span>
+                <span class="result-value" id="cs-r-current">—</span>
+              </div>
             <div class="result-item">
               <span class="result-label">Minimum Estimated Conductor Area</span>
               <span class="result-value" id="cs-r-area">—</span>
@@ -2046,11 +2393,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Battery Bank Sizing Calculator</h1>
-          <p class="hero-subtitle">Estimate battery capacity for off-grid or backup power systems.</p>
+          <div class="calc-badge">Energy & Power Systems</div>
+          <h1 class="calc-title">Battery Bank Sizing Calculator</h1>
+          <p class="calc-desc">Estimate battery capacity for off-grid or backup power systems.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="bb-energy">Daily Energy Requirement</label>
               <div class="unit-row">
@@ -2106,13 +2455,18 @@ Fluid
               <input type="number" id="bb-batt-ah" step="any" placeholder="e.g. 200" min="0">
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateBatteryBank()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('battery-bank')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateBatteryBank()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('battery-bank')">↻ Reset</button>
             </div>
             <div id="bb-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="bb-results" hidden>
-            <h2>Results</h2>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="bb-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
+            </div>
+            <div id="bb-results" class="results-container" hidden>
             <div class="result-item">
               <span class="result-label">Required Battery Energy</span>
               <span class="result-value" id="bb-r-energy">—</span>
@@ -2163,11 +2517,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Energy Consumption Calculator</h1>
-          <p class="hero-subtitle">Calculate electrical energy use and estimated cost for your appliances.</p>
+          <div class="calc-badge">Energy & Power Systems</div>
+          <h1 class="calc-title">Energy Consumption Calculator</h1>
+          <p class="calc-desc">Calculate electrical energy use and estimated cost for your appliances.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="ec-tariff">Electricity Tariff (per kWh) — optional</label>
               <input type="number" id="ec-tariff" step="any" placeholder="e.g. 0.15" min="0">
@@ -2177,14 +2533,19 @@ Fluid
               <button class="btn btn-secondary" onclick="app.addApplianceRow('ec-appliances', 'energy')">+ Add Appliance</button>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateEnergyConsumption()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('energy-consumption')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateEnergyConsumption()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('energy-consumption')">↻ Reset</button>
             </div>
             <div id="ec-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="ec-results" hidden>
-            <h2>Summary Dashboard</h2>
-            <div class="result-item">
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="ec-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
+            </div>
+            <div id="ec-results" class="results-container" hidden>
+              <div class="result-item">
               <span class="result-label">Total Connected Load</span>
               <span class="result-value" id="ec-r-load">—</span>
             </div>
@@ -2224,11 +2585,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Generator Sizing Calculator</h1>
-          <p class="hero-subtitle">Estimate the required generator capacity for your loads.</p>
+          <div class="calc-badge">Energy & Power Systems</div>
+          <h1 class="calc-title">Generator Sizing Calculator</h1>
+          <p class="calc-desc">Estimate the required generator capacity for your loads.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="gs-margin">Design Margin (%)</label>
               <input type="number" id="gs-margin" step="any" placeholder="e.g. 20" min="0" value="20">
@@ -2238,12 +2601,18 @@ Fluid
               <button class="btn btn-secondary" onclick="app.addApplianceRow('gs-loads', 'generator')">+ Add Load</button>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-primary" onclick="app.calculateGeneratorSizing()">Calculate</button>
-              <button class="btn btn-secondary" onclick="app.reset('generator-sizing')">Reset</button>
+              <button class="btn btn-primary" onclick="app.calculateGeneratorSizing()">⚡ Calculate</button>
+              <button class="btn btn-secondary" onclick="app.reset('generator-sizing')">↻ Reset</button>
             </div>
             <div id="gs-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="gs-results" hidden>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Results</h2>
+            <div class="results-placeholder" id="gs-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter values and click Calculate to see results</p>
+            </div>
+            <div id="gs-results" class="results-container" hidden>
             <h2>Results</h2>
             <div class="result-item">
               <span class="result-label">Total Running Load</span>
@@ -2291,10 +2660,13 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>Engineering Unit Converter</h1>
+          <div class="calc-badge">Converters</div>
+          <h1 class="calc-title">Engineering Unit Converter</h1>
+          <p class="calc-desc">Convert between common engineering units.</p>
         </div>
         <div class="calc-layout">
-          <div class="calc-form">
+          <div class="calc-panel calc-form-panel">
+            <h2 class="panel-title">📥 Inputs</h2>
             <div class="input-group">
               <label for="uc-category">Category</label>
               <select id="uc-category" onchange="app.ucUpdateUnits()">
@@ -2316,19 +2688,25 @@ Fluid
               <div class="result-value" id="uc-result">—</div>
             </div>
             <div class="calc-actions">
-              <button class="btn btn-secondary" onclick="app.reset('unit-converter')">Reset</button>
+              <button class="btn btn-secondary" onclick="app.reset('unit-converter')">↻ Reset</button>
             </div>
             <div id="uc-error" class="error" role="alert" hidden></div>
           </div>
-          <div class="calc-results" id="uc-results-box">
-            <h2>Conversion Details</h2>
-            <div class="formula-box">
-              <h3>Available Units</h3>
-              <ul id="uc-units-list"></ul>
+          <div class="calc-panel calc-results-panel">
+            <h2 class="panel-title">📊 Conversion Details</h2>
+            <div class="results-placeholder" id="uc-placeholder">
+              <span class="placeholder-icon">&#128200;</span>
+              <p>Enter a value and select units to see conversion</p>
             </div>
-            <div class="related-calculators">
-              <h3>Related Calculators</h3>
-              <div id="related-unit-converter"></div>
+            <div id="uc-results-box" class="results-container">
+              <div class="formula-box">
+                <h3>Available Units</h3>
+                <ul id="uc-units-list"></ul>
+              </div>
+              <div class="related-calculators">
+                <h3>Related Calculators</h3>
+                <div id="related-unit-converter"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -2340,7 +2718,7 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>About EngineerTools</h1>
+          <h1 class="calc-title">About EngineerTools</h1>
         </div>
         <div class="content-block">
           <p>EngineerTools is a free, browser-based collection of engineering calculators designed for students, technicians, researchers, and engineers.</p>
@@ -2367,7 +2745,7 @@ Fluid
       <div class="container">
         <div class="calc-header">
           <button class="back-btn" onclick="app.navigate('home')" aria-label="Back to home">&#8592; Back</button>
-          <h1>How to Use EngineerTools</h1>
+          <h1 class="calc-title">How to Use EngineerTools</h1>
         </div>
         <div class="content-block">
           <h2>Getting Started</h2>
@@ -2392,12 +2770,31 @@ Fluid
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>&copy; <span id="year"></span> EngineerTools. Free Engineering Calculators.</p>
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="#" onclick="app.navigate('about'); return false;">About</a>
-        <a href="#" onclick="app.navigate('howto'); return false;">How to Use</a>
-      </nav>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">ENGINEERTOOLS</span>
+        <p class="footer-tagline">Free Engineering Calculators</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <a href="#" onclick="app.navigate('home'); return false;">Electrical</a>
+          <a href="#" onclick="app.navigate('home'); return false;">Electronics</a>
+          <a href="#" onclick="app.navigate('home'); return false;">Mechanical</a>
+          <a href="#" onclick="app.navigate('home'); return false;">Fluid & Hydraulics</a>
+          <a href="#" onclick="app.navigate('home'); return false;">Energy & Power Systems</a>
+          <a href="#" onclick="app.navigate('home'); return false;">Converters</a>
+        </div>
+        <div class="footer-col">
+          <h4>About</h4>
+          <a href="#" onclick="app.navigate('about'); return false;">About EngineerTools</a>
+          <a href="#" onclick="app.navigate('howto'); return false;">How to Use</a>
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> EngineerTools. Free Engineering Calculators.</p>
+      </div>
     </div>
   </footer>
 

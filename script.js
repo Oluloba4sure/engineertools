@@ -1,13 +1,39 @@
 const app = {
   current: 'home',
 
+  animateView(view) {
+    const viewEl = document.getElementById('view-' + view);
+    if (!viewEl) return;
+    viewEl.style.opacity = '0';
+    viewEl.style.transform = 'translateY(12px)';
+    requestAnimationFrame(() => {
+      viewEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      viewEl.style.opacity = '1';
+      viewEl.style.transform = 'translateY(0)';
+    });
+  },
+
+  showResults(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.hidden = false;
+    requestAnimationFrame(() => el.classList.add('results-visible'));
+  },
+
   navigate(view) {
     document.querySelectorAll('.view').forEach(el => el.hidden = true);
     const target = document.getElementById('view-' + view);
     if (target) { target.hidden = false; }
     this.current = view;
+    this.animateView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (view === 'home') { this.search(document.getElementById('search-input').value); }
+    if (view === 'home') {
+      this.search(document.getElementById('search-input').value);
+      const cardCount = document.querySelectorAll('.calc-card').length;
+      const catCount = document.querySelectorAll('.category-block').length;
+      const statEl = document.getElementById('stat-calculators');
+      if (statEl) statEl.textContent = cardCount;
+    }
     document.getElementById('nav-menu').classList.remove('open');
     document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
     const relatedMap = {
@@ -110,7 +136,7 @@ const app = {
     this.setResult('ol-r-current', i.toFixed(4) + ' A');
     this.setResult('ol-r-resistance', r.toFixed(4) + ' Ω');
     this.setResult('ol-r-power', p.toFixed(4) + ' W');
-    document.getElementById('ol-results').hidden = false;
+    this.showResults('ol-results');
   },
 
   calculateElectricalPower() {
@@ -143,7 +169,7 @@ const app = {
     this.setResult('ep-r-voltage', v.toFixed(4) + ' V');
     this.setResult('ep-r-current', i.toFixed(4) + ' A');
     this.setResult('ep-r-energy', e !== null ? (e >= 1000 ? (e / 1000).toFixed(4) + ' kWh' : e.toFixed(4) + ' Wh') : '—');
-    document.getElementById('ep-results').hidden = false;
+    this.showResults('ep-results');
   },
 
   calculateBatteryRuntime() {
@@ -165,7 +191,7 @@ const app = {
     const m = Math.round((runtime - h) * 60);
     const timeStr = h + 'h ' + m + 'm';
     this.setResult('br-r-runtime', timeStr + ' (approx ' + runtime.toFixed(2) + ' hours)');
-    document.getElementById('br-results').hidden = false;
+    this.showResults('br-results');
   },
 
   calculateMotorSpeed() {
@@ -179,7 +205,7 @@ const app = {
     if (P.v === 0) { this.showError('ms-error', 'Number of poles cannot be zero.'); return; }
     const ns = (120 * f.v) / P.v;
     this.setResult('ms-r-speed', ns.toFixed(2) + ' RPM');
-    document.getElementById('ms-results').hidden = false;
+    this.showResults('ms-results');
   },
 
   calculateGearRatio() {
@@ -197,7 +223,7 @@ const app = {
     const outputRpm = inputRpm.v / ratio;
     this.setResult('gr-r-ratio', ratio.toFixed(4) + ':1');
     this.setResult('gr-r-output', outputRpm.toFixed(2) + ' RPM');
-    document.getElementById('gr-results').hidden = false;
+    this.showResults('gr-results');
   },
 
   convert() {
@@ -275,7 +301,7 @@ const app = {
     this.setResult('rc-tol', tol.charAt(0).toUpperCase() + tol.slice(1));
     const detail = document.getElementById('rc-calc-detail');
     if (detail) detail.textContent = '= (' + d1 + ' × 10 + ' + d2 + ') × 10^' + m + ' = ' + formatted + ' ±' + t + '%';
-    document.getElementById('rc-results').hidden = false;
+    this.showResults('rc-results');
     this.updateResistorVisual(b1, b2, mult, tol);
   },
 
@@ -319,7 +345,7 @@ const app = {
     this.setResult('vd-r-vr1', vr1.toFixed(4) + ' V');
     this.setResult('vd-r-vr2', vr2.toFixed(4) + ' V');
     this.setResult('vd-r-sum', sum.toFixed(4) + ' Ω');
-    document.getElementById('vd-results').hidden = false;
+    this.showResults('vd-results');
   },
 
   calculateCapacitor() {
@@ -351,7 +377,7 @@ const app = {
       this.setResult('cap-r-cap', cap.v + ' ' + capUnit);
       this.setResult('cap-r-tc', tau.toFixed(6) + ' s');
     }
-    document.getElementById('cap-results').hidden = false;
+    this.showResults('cap-results');
   },
 
   calculateInductor() {
@@ -382,7 +408,7 @@ const app = {
       this.setResult('ind-r-ind', ind.v + ' ' + indUnit);
       this.setResult('ind-r-tc', tau.toFixed(6) + ' s');
     }
-    document.getElementById('ind-results').hidden = false;
+    this.showResults('ind-results');
   },
 
   calculateTransformer() {
@@ -434,7 +460,7 @@ const app = {
     this.setResult('tr-r-ratio', turnsRatio !== null ? turnsRatio.toFixed(4) + ':1' : '—');
     this.setResult('tr-r-ip', ipVal !== null ? ipVal.toFixed(4) + ' A' : '—');
     this.setResult('tr-r-is', isVal !== null ? isVal.toFixed(4) + ' A' : '—');
-    document.getElementById('tr-results').hidden = false;
+    this.showResults('tr-results');
   },
 
   calculateLEDResistor() {
@@ -459,7 +485,7 @@ const app = {
     this.setResult('led-r-std', standard + ' Ω');
     this.setResult('led-r-p', p.toFixed(4) + ' W');
     this.setResult('led-r-rec', recommendedPower.toFixed(2) + ' W');
-    document.getElementById('led-results').hidden = false;
+    this.showResults('led-results');
   },
 
   nextStandardResistor(value) {
@@ -497,7 +523,7 @@ const app = {
     this.setResult('tp-r-s', this.formatPower(s, sUnit));
     this.setResult('tp-r-q', this.formatReactivePower(q, qUnit));
     this.setResult('tp-r-pf', pf.v.toFixed(4));
-    document.getElementById('tp-results').hidden = false;
+    this.showResults('tp-results');
   },
 
   formatPower(w, unit) {
@@ -574,7 +600,7 @@ const app = {
     this.setResult('bd-r-deflection', deltaMm.toFixed(4) + ' mm (' + delta.toExponential(4) + ' m)');
     this.setResult('bd-r-formula', formula);
     this.setResult('bd-r-steps', 'Substituting values: ' + formula + ' = ' + delta.toExponential(4) + ' m = ' + deltaMm.toFixed(4) + ' mm');
-    document.getElementById('bd-results').hidden = false;
+    this.showResults('bd-results');
   },
 
   calculateTorque() {
@@ -598,7 +624,7 @@ const app = {
     this.setResult('tq-r-nmm', (tau * 1000).toFixed(2) + ' N·mm');
     this.setResult('tq-r-knm', (tau / 1000).toFixed(6) + ' kN·m');
     this.setResult('tq-r-steps', 'τ = ' + rM.toFixed(4) + ' m × ' + fN.toFixed(2) + ' N × sin(' + angle.v + '°) = ' + tau.toFixed(4) + ' N·m');
-    document.getElementById('tq-results').hidden = false;
+    this.showResults('tq-results');
   },
 
   calculateShaftPower() {
@@ -614,7 +640,7 @@ const app = {
     this.setResult('sp-r-kw', (p / 1000).toFixed(4) + ' kW');
     this.setResult('sp-r-hp', (p / 746).toFixed(4) + ' hp');
     this.setResult('sp-r-steps', 'P = 2π × ' + N.v + ' × ' + T.v + ' / 60 = ' + p.toFixed(2) + ' W');
-    document.getElementById('sp-results').hidden = false;
+    this.showResults('sp-results');
   },
 
   calculateGearDesign() {
@@ -641,7 +667,7 @@ const app = {
     this.setResult('gd-r-d1', d1.toFixed(2) + ' mm');
     this.setResult('gd-r-d2', d2.toFixed(2) + ' mm');
     this.setResult('gd-r-center', center.toFixed(2) + ' mm');
-    document.getElementById('gd-results').hidden = false;
+    this.showResults('gd-results');
   },
 
   calculateHydraulicJack() {
@@ -667,7 +693,7 @@ const app = {
     this.setResult('hj-r-pressure', pressure.toFixed(2) + ' Pa (' + (pressure / 1000).toFixed(2) + ' kPa)');
     this.setResult('hj-r-ratio', ratio.toFixed(2) + ':1');
     this.setResult('hj-r-f2', f2.toFixed(2) + ' N (' + (f2 / 1000).toFixed(2) + ' kN)');
-    document.getElementById('hj-results').hidden = false;
+    this.showResults('hj-results');
   },
 
   calculatePumpHead() {
@@ -690,7 +716,7 @@ const app = {
     this.setResult('ph-r-head', head.toFixed(2) + ' m');
     this.setResult('ph-r-total', total.toFixed(2) + ' m');
     this.setResult('ph-r-steps', 'H = ' + pPa.toFixed(0) + ' Pa / (' + rho.v + ' × 9.81) = ' + head.toFixed(2) + ' m. Total = ' + head.toFixed(2) + ' + ' + staticH + ' + ' + frictionH + ' + ' + velocityH + ' = ' + total.toFixed(2) + ' m');
-    document.getElementById('ph-results').hidden = false;
+    this.showResults('ph-results');
   },
 
   calculateFluidPressure() {
@@ -727,7 +753,7 @@ const app = {
     this.setResult('fp-r-kpa', (pPa / 1000).toFixed(4) + ' kPa');
     this.setResult('fp-r-bar', (pPa / 1e5).toFixed(6) + ' bar');
     this.setResult('fp-r-psi', (pPa / 6894.757).toFixed(4) + ' psi');
-    document.getElementById('fp-results').hidden = false;
+    this.showResults('fp-results');
   },
 
   // ===== VERSION 4 CALCULATORS =====
@@ -772,7 +798,7 @@ const app = {
     this.setResult('ss-r-installed', (installedW >= 1000 ? (installedW / 1000).toFixed(2) + ' kW' : installedW.toFixed(0) + ' W'));
     this.setResult('ss-r-production', (productionWh >= 1000 ? (productionWh / 1000).toFixed(2) + ' kWh/day' : productionWh.toFixed(0) + ' Wh/day'));
     this.setResult('ss-r-steps', 'PV = ' + eWh.toFixed(0) + ' Wh / (' + H.v + ' × ' + eta + ') = ' + pvW.toFixed(0) + ' W. Panels = ceil(' + pvW.toFixed(0) + ' / ' + panel.v + ') = ' + panels + '.');
-    document.getElementById('ss-results').hidden = false;
+    this.showResults('ss-results');
   },
 
   // Reusable appliance/load entry component
@@ -845,7 +871,7 @@ const app = {
     this.setResult('inv-r-continuous', recommendedW.toFixed(0) + ' W (' + recommendedKva.toFixed(2) + ' kW)');
     this.setResult('inv-r-rating', std + ' kVA (approx ' + (std * 0.8).toFixed(1) + ' kW at PF 0.8)');
     this.setResult('inv-r-surge-cap', surgeCap.toFixed(0) + ' W (' + (surgeCap / 1000).toFixed(2) + ' kW)');
-    document.getElementById('inv-results').hidden = false;
+    this.showResults('inv-results');
   },
 
   calculateCableSizing() {
@@ -885,7 +911,7 @@ const app = {
     this.setResult('cs-r-vd-pct', vdActualPct.toFixed(2) + '%');
     this.setResult('cs-r-material', material.charAt(0).toUpperCase() + material.slice(1));
     this.setResult('cs-r-steps', 'I = ' + pW.toFixed(0) + ' / (' + (phase === 'single' ? V.v + ' × ' + pf.v : '√3 × ' + V.v + ' × ' + pf.v) + ') = ' + current.toFixed(2) + ' A. Min area = ' + minAreaMm2.toFixed(2) + ' mm². Selected: ' + chosen + ' mm².');
-    document.getElementById('cs-results').hidden = false;
+    this.showResults('cs-results');
   },
 
   bbTypeChange() {
@@ -939,7 +965,7 @@ const app = {
       this.setResult('bb-r-total', '— (battery specs not provided)');
     }
     this.setResult('bb-r-steps', 'Battery Energy = (' + eWh.toFixed(0) + ' × ' + days.v + ') / (' + dodDec + ' × ' + effDec + ') = ' + battEnergy.toFixed(0) + ' Wh. Capacity = ' + battEnergy.toFixed(0) + ' / ' + V.v + ' = ' + ah.toFixed(0) + ' Ah.');
-    document.getElementById('bb-results').hidden = false;
+    this.showResults('bb-results');
   },
 
   calculateEnergyConsumption() {
@@ -977,7 +1003,7 @@ const app = {
         <div class="bar-track"><div class="bar-fill" style="width:${(d.monthlyKwh / max * 100).toFixed(1)}%"></div></div>
         <span class="bar-value">${d.monthlyKwh.toFixed(1)}</span>
       </div>`).join('');
-    document.getElementById('ec-results').hidden = false;
+    this.showResults('ec-results');
   },
 
   calculateGeneratorSizing() {
@@ -1005,7 +1031,7 @@ const app = {
     this.setResult('gs-r-recommended', recommendedKva.toFixed(2) + ' kVA');
     this.setResult('gs-r-standard', std + ' kVA');
     this.setResult('gs-r-steps', 'Running = ' + totalRunning.toFixed(0) + ' W. Surge = ' + totalSurge.toFixed(0) + ' W. Recommended = max(' + totalRunning.toFixed(0) + ', ' + totalSurge.toFixed(0) + ') × ' + factor + ' = ' + recommendedVA.toFixed(0) + ' VA = ' + recommendedKva.toFixed(2) + ' kVA. Standard: ' + std + ' kVA.');
-    document.getElementById('gs-results').hidden = false;
+    this.showResults('gs-results');
   },
 
   related(ids) {
