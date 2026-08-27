@@ -97,7 +97,7 @@ export default function ElectricalPower() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Power" value={results ? (pUnit === "kW" ? (results.p / 1000).toFixed(4) : results.p.toFixed(4)) + " " + pUnit : "—"} />
             <Result label="Voltage" value={results ? results.v.toFixed(4) + " V" : "—"} />
             <Result label="Current" value={results ? results.i.toFixed(4) + " A" : "—"} />

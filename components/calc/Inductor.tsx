@@ -147,7 +147,7 @@ export default function Inductor() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Inductive Reactance (XL)" value={results && results.xl !== null ? results.xl.toFixed(4) + " Ω" : "—"} />
             <Result label="Frequency" value={results ? (results.f === 0 ? "—" : results.f + " Hz") : "—"} />
             <Result label="Inductance" value={results ? results.l + " " + results.lUnit : "—"} />

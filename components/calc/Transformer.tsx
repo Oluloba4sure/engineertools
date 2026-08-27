@@ -93,7 +93,7 @@ export default function Transformer() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Primary Voltage" value={results && results.vp !== null ? results.vp.toFixed(4) + " V" : "—"} />
             <Result label="Secondary Voltage" value={results && results.vs !== null ? results.vs.toFixed(4) + " V" : "—"} />
             <Result label="Primary Turns" value={results && results.np !== null ? results.np.toFixed(0) : "—"} />

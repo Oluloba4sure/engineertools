@@ -108,7 +108,7 @@ export default function SolarSizing() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Daily Energy Requirement" value={results ? (energyUnit === "kWh" ? results.energy.toFixed(2) + " kWh/day" : (results.energy * 1000).toFixed(0) + " Wh/day") : "—"} />
             <Result label="Required Solar Array Capacity" value={results ? fmtPower(results.pv) : "—"} />
             <Result label="Recommended Number of Panels" value={results ? results.panels + " panels" : "—"} />

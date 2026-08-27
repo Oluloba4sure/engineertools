@@ -100,7 +100,7 @@ export default function LedResistor() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Required Resistor" value={results ? results.r.toFixed(2) + " Ω" : "—"} />
             <Result label="Recommended Standard Value" value={results ? results.std + " Ω" : "—"} />
             <Result label="Resistor Power" value={results ? results.p.toFixed(4) + " W" : "—"} />

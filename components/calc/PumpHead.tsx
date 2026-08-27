@@ -83,7 +83,7 @@ export default function PumpHead() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Pressure Head (H)" value={results ? results.head.toFixed(2) + " m" : "—"} />
             <Result label="Total Dynamic Head" value={results ? results.total.toFixed(2) + " m" : "—"} />
             <FormulaBox formulas={["H = P / (ρg)", "H_total = H_static + H_friction + H_velocity"]} note={results ? results.steps : null} />

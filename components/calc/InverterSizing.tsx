@@ -75,7 +75,7 @@ export default function InverterSizing() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Total Running Load" value={results ? `${results.running.toFixed(0)} W (${(results.running / 1000).toFixed(2)} kW)` : "—"} />
             <Result label="Estimated Surge Requirement" value={results ? results.surge.toFixed(0) + " W" : "—"} />
             <Result label="Recommended Continuous Capacity" value={results ? `${results.continuous.toFixed(0)} W (${(results.continuous / 1000).toFixed(2)} kW)` : "—"} />

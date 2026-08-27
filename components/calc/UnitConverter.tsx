@@ -95,7 +95,7 @@ export default function UnitConverter() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={result !== null}>
             <Result label="Converted Value" value={result ?? "—"} />
             <FormulaBox title="Available Units" note={
               <ul>

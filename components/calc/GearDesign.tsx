@@ -64,7 +64,7 @@ export default function GearDesign() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Gear Ratio" value={results ? results.ratio.toFixed(4) + ":1" : "—"} />
             <Result label="Output RPM (N₂)" value={results ? results.output.toFixed(2) + " RPM" : "—"} />
             <Result label="Driver Pitch Diameter" value={results ? results.d1.toFixed(2) + " mm" : "—"} />

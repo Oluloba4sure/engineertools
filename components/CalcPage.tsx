@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import Link from "next/link";
 import { getRelated } from "@/lib/catalog";
 
@@ -34,15 +34,6 @@ export function CalcPage({
   desc: string;
   children: CalcPageChildren;
 }) {
-  const resultsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = resultsRef.current;
-    if (!el) return;
-    const raf = requestAnimationFrame(() => el.classList.add("results-visible"));
-    return () => cancelAnimationFrame(raf);
-  }, [children.results]);
-
   return (
     <section className="view">
       <div className="container">
@@ -58,7 +49,7 @@ export function CalcPage({
           <div className="calc-panel calc-form-panel">{children.form}</div>
           <div className="calc-panel calc-results-panel">
             <h2 className="panel-title">📊 Results</h2>
-            <div ref={resultsRef}>{children.results}</div>
+            <div>{children.results}</div>
           </div>
         </div>
       </div>

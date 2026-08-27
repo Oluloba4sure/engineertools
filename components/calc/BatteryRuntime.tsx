@@ -64,7 +64,7 @@ export default function BatteryRuntime() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Estimated Runtime" value={results ? fmt(results.runtime) : "—"} />
             <DisclaimerBox title="Important Disclaimer">
               This is an estimate only. Actual runtime depends on battery condition, discharge

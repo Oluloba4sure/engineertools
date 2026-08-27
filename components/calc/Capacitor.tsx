@@ -154,7 +154,7 @@ export default function Capacitor() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Capacitive Reactance (Xc)" value={results && results.xc !== null ? results.xc.toFixed(4) + " Ω" : "—"} />
             <Result label="Frequency" value={results ? (results.f === 0 ? "—" : results.f + " Hz") : "—"} />
             <Result label="Capacitance" value={results ? results.c + " " + results.cUnit : "—"} />

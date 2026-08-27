@@ -67,7 +67,7 @@ export default function Torque() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Torque (N·m)" value={results ? results.nm.toFixed(4) + " N·m" : "—"} />
             <Result label="Torque (N·mm)" value={results ? (results.nm * 1000).toFixed(2) + " N·mm" : "—"} />
             <Result label="Torque (kN·m)" value={results ? (results.nm / 1000).toFixed(6) + " kN·m" : "—"} />

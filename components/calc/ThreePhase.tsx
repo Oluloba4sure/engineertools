@@ -106,7 +106,7 @@ export default function ThreePhase() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Real Power (P)" value={results ? formatPower(results.p, pUnit) : "—"} />
             <Result label="Apparent Power (S)" value={results ? formatPower(results.s, sUnit) : "—"} />
             <Result label="Reactive Power (Q)" value={results ? formatReactivePower(results.q, qUnit) : "—"} />

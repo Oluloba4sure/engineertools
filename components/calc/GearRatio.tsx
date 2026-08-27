@@ -52,7 +52,7 @@ export default function GearRatio() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Gear Ratio" value={results ? results.ratio.toFixed(4) + ":1" : "—"} />
             <Result label="Output RPM" value={results ? results.output.toFixed(2) + " RPM" : "—"} />
             <FormulaBox formulas={["Gear Ratio = Driven Teeth / Driver Teeth", "Output RPM = Input RPM / Gear Ratio"]} />

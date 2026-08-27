@@ -85,7 +85,7 @@ export default function EnergyConsumption() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Total Connected Load" value={results ? `${results.load.toFixed(0)} W (${(results.load / 1000).toFixed(2)} kW)` : "—"} />
             <Result label="Total Daily Energy" value={results ? `${(results.daily / 1000).toFixed(2)} kWh/day` : "—"} />
             <Result label="Total Monthly Energy" value={results ? `${results.monthly / 1000} kWh/month` : "—"} />

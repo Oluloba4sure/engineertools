@@ -38,14 +38,16 @@ export function Result({
   );
 }
 
-export function ResultsPanel({ children }: { children: React.ReactNode }) {
+export function ResultsPanel({ children, hasResults = false }: { children: React.ReactNode; hasResults?: boolean }) {
   return (
     <div className="calc-results">
-      <div className="results-placeholder">
-        <span className="placeholder-icon">&#128200;</span>
-        <p>Enter values and click Calculate to see results</p>
-      </div>
-      <div className="results-container">{children}</div>
+      {!hasResults && (
+        <div className="results-placeholder">
+          <span className="placeholder-icon">&#128200;</span>
+          <p>Enter values and click Calculate to see results</p>
+        </div>
+      )}
+      <div className={`results-container ${hasResults ? "results-visible" : ""}`}>{children}</div>
     </div>
   );
 }

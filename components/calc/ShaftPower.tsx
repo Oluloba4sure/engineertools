@@ -46,7 +46,7 @@ export default function ShaftPower() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Power (W)" value={results ? results.p.toFixed(2) + " W" : "—"} />
             <Result label="Power (kW)" value={results ? (results.p / 1000).toFixed(4) + " kW" : "—"} />
             <Result label="Power (hp)" value={results ? (results.p / 746).toFixed(4) + " hp" : "—"} />

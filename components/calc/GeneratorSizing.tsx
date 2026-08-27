@@ -82,7 +82,7 @@ export default function GeneratorSizing() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Total Running Load" value={results ? `${results.running.toFixed(0)} W (${(results.running / 1000).toFixed(2)} kW)` : "—"} />
             <Result label="Estimated Starting Load" value={results ? `${results.starting.toFixed(0)} W (${(results.starting / 1000).toFixed(2)} kW)` : "—"} />
             <Result label="Estimated Apparent Power" value={results ? `${(results.apparent / 1000).toFixed(2)} kVA (at PF 0.8)` : "—"} />

@@ -155,7 +155,7 @@ export default function BeamDeflection() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Maximum Deflection" value={results ? results.deflection.toFixed(4) + " mm (" + (results.deflection / 1000).toExponential(4) + " m)" : "—"} />
             <FormulaBox title="Formula Used" note={<><p>{results ? results.formula : "—"}</p><p>{results ? results.steps : "—"}</p></>} />
             <DisclaimerBox title="Important Note">

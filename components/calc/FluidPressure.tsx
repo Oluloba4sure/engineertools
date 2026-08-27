@@ -107,7 +107,7 @@ export default function FluidPressure() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Pressure" value={results ? (results.pPa / CONVERSIONS[resultUnit]).toFixed(4) + " " + resultUnit : "—"} />
             <Result label="Pressure (Pa)" value={results ? results.pPa.toFixed(2) + " Pa" : "—"} />
             <Result label="Pressure (kPa)" value={results ? (results.pPa / 1000).toFixed(4) + " kPa" : "—"} />

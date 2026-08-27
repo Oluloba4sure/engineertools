@@ -126,7 +126,7 @@ export default function BatteryBank() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Required Battery Energy" value={results ? `${results.energy.toFixed(0)} Wh (${(results.energy / 1000).toFixed(2)} kWh)` : "—"} />
             <Result label="Recommended Battery Capacity" value={results ? `${results.ah.toFixed(0)} Ah` : "—"} />
             <Result label="System Voltage" value={results ? `${results.voltage} V` : "—"} />

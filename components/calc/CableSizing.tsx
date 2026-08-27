@@ -101,7 +101,7 @@ export default function CableSizing() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Load Current" value={results ? results.current.toFixed(2) + " A" : "—"} />
             <Result label="Minimum Estimated Conductor Area" value={results ? results.area.toFixed(2) + " mm²" : "—"} />
             <Result label="Recommended Standard Cable Size" value={results ? results.size + " mm²" : "—"} />

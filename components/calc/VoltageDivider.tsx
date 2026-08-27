@@ -70,7 +70,7 @@ export default function VoltageDivider() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Output Voltage (Vout)" value={results ? results.vout.toFixed(4) + " V" : "—"} />
             <Result label="Voltage across R1" value={results ? results.vr1.toFixed(4) + " V" : "—"} />
             <Result label="Voltage across R2" value={results ? results.vr2.toFixed(4) + " V" : "—"} />

@@ -113,7 +113,7 @@ export default function ResistorColor() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Resistance" value={results ? formatResistance(results.value) : "—"} />
             <Result label="Tolerance" value={results ? `±${results.t}%` : "—"} />
             <Result label="Minimum Resistance" value={results ? formatResistance(results.min) : "—"} />

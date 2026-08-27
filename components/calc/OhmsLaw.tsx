@@ -73,7 +73,7 @@ export default function OhmsLaw() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Voltage" value={results ? results.v.toFixed(4) + " V" : "—"} />
             <Result label="Current" value={results ? results.i.toFixed(4) + " A" : "—"} />
             <Result label="Resistance" value={results ? results.r.toFixed(4) + " Ω" : "—"} />

@@ -56,7 +56,7 @@ export default function HydraulicJack() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Small Piston Area" value={results ? (results.a1 * 1e6).toFixed(4) + " mm²" : "—"} />
             <Result label="Large Piston Area" value={results ? (results.a2 * 1e6).toFixed(4) + " mm²" : "—"} />
             <Result label="Hydraulic Pressure" value={results ? results.pressure.toFixed(2) + " Pa (" + (results.pressure / 1000).toFixed(2) + " kPa)" : "—"} />

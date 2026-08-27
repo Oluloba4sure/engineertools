@@ -46,7 +46,7 @@ export default function MotorSpeed() {
           </>
         ),
         results: (
-          <ResultsPanel>
+          <ResultsPanel hasResults={results !== null}>
             <Result label="Synchronous Speed" value={results ? results.speed.toFixed(2) + " RPM" : "—"} />
             <FormulaBox formulas={["Ns = 120 × f / P", "Ns = synchronous speed in RPM", "f = frequency in Hz", "P = number of poles"]} />
             <Explanation>
